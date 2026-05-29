@@ -1,0 +1,20 @@
+.pokemon-container{
+    height: 300px;
+    width: 300px;
+    background-color: #74CB48;
+}
+
+.pokemon-image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pkmn-img{
+    height: 200px;
+}
+
+.type-text{
+    text-align: center;
+}
