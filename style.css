@@ -1,6 +1,6 @@
 .pokemon-container{
-    height: 300px;
-    width: 300px;
+    height: 325px;
+    width: 325px;
     background-color: #74CB48;
 }
 
@@ -16,5 +16,6 @@
 }
 
 .type-text{
-    text-align: center;
+    display: flex;
+    justify-content: center;
 }
