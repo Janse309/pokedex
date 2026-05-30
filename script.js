@@ -1,4 +1,5 @@
 let BASE_URL = "https://pokeapi.co/api/v2/";
+let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
 
 let allPokemon = [];
 let currentPokemon = [];
@@ -35,5 +36,5 @@ function renderTypes(pokeResponse) {
     return typeText;
 }
 
-fetchPokemon(151);
+fetchPokemon(23);
 
