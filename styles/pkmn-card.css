@@ -1,0 +1,19 @@
+.pokemon-image-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.pkmn-img{
+    height: 200px;
+}
+
+.icon-type-img-container{
+    display: flex;
+    justify-content: center;
+}
+
+.icon{
+    max-width: 100%;
+}
