@@ -8,12 +8,12 @@
     background-color: #C12239;
 }
 
-.bg_flying {
+.bg_flying { /*id 3*/
     background-color: #A891EC;
 }
 
-.bg_poinson {
-    background-color: #A43E9E;
+.bg_poison { /*id 4*/
+    background-color: #c02cb6;
 }
 
 .bg_ground {
