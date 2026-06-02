@@ -1,19 +1,29 @@
-.pokemon-image-container{
+.pokemon-card-header{
+    text-align: center;
+}
+
+.pokemon-image-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.pkmn-img{
+.pkmn-img {
     height: 200px;
 }
 
-.icon-type-img-container{
+.icon-type-img-container {
     display: flex;
     justify-content: center;
 }
 
-.icon{
-    max-width: 100%;
+.icon {
+    max-width: 100px;
+}
+
+.pokemon-card {
+    margin: 8px;
+    border-radius: 8px;
+
 }
