@@ -10,6 +10,7 @@ let OFFSET = 0;
 let LIMIT = 25;
 
 async function init() {
+    currentPokemon = allPokemon;
     await loadPokemon();
 }
 
@@ -74,12 +75,12 @@ async function loadPokemon() {
 //     pokemonContentContainer.innerHTML = getPokemonInformationTemplate(pokeResponse, pokemonBgClass);
 // }
 
-function renderTypes(pokeResponse) {
+function renderTypes(pokemon) {
     let typeText = "";
 
-    for (let i = 0; i < pokeResponse.types.length; i++) {
-        let typeName = pokeResponse.types[i].type.name;
-        let typeUrl = pokeResponse.types[i].type.url;
+    for (let i = 0; i < pokemon.types.length; i++) {
+        let typeName = pokemon.types[i].type.name;
+        let typeUrl = pokemon.types[i].type.url;
         let urlParts = typeUrl.split('/');
         let typeId = urlParts[urlParts.length - 2];
         let bgClass = "bg_" + typeName;

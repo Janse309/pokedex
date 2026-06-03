@@ -1,9 +1,21 @@
+.pokemon-card {
+    margin-top: 24px;
+    font-family: 'Poppins', sans-serif;
+}
+
 .pokemon-card-header {
     display: flex;
-    align-items: center;
     justify-content: center;
+    position: relative;
     height: 40px;
     background-color: #e0e0e0;
+    align-items: center;
+}
+
+.pokemon-card-header p{
+    font-size: 20px;
+    margin-right: 8px;
+    font-weight: bold;
 }
 
 .pokemon-image-container {
@@ -22,12 +34,6 @@
 .type-icon {
     width: 120px;
     border-radius: 4px;
-}
-
-.pokemon-card {
-    margin-top: 24px;
-    text-align: center;
-    border-radius: 8px;
 }
 
 .pkmn-card-footer {
