@@ -1,17 +1,19 @@
-function getPokemonInformationTemplate(pokeResponse, pokemonBgClass) {
-    let pokemonImg = pokeResponse.sprites.other['official-artwork'].front_default || pokeResponse.sprites.front_default;
-    return `
+function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
+    let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+    return `   
         <div class="pokemon-card">
             <div class="pokemon-card-header">
-            <h2>${pokeResponse.name.toUpperCase()}</h2>
+                <p>#${pokemon.id}</p>
+                <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
             </div>
             <div class="pokemon-image-container ${pokemonBgClass}">
-                <img class="pkmn-img" src="${pokemonImg}" alt="${pokeResponse.name}">
+                <img class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}">
             </div>
-            <div class="pkmn-card-footer">${renderTypes(pokeResponse)}</div>
+            <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
         </div>
     `
 }
+
 
 // function getPokemonInformationTemplate(pokeResponse, pokemonBgClass) {
 //     return `
