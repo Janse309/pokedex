@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./styles/standart.css">
     <link rel="stylesheet" href="./styles/backgroundcolors.css">
     <link rel="stylesheet" href="./styles/pkmn-card.css">
+    <link rel="stylesheet" href="./styles/fonts.css">
 
     <script src="./scripts/template.js"></script>
     <script src="./script.js"></script>
@@ -16,18 +17,26 @@
 
 <body onload="init()">
 
+    <header class="pokedex-header">
+        <section class="pokedex-header-content content-wrapper">
+            <div>
+                <h1 class="page-headline">Pokedex</h1>
+            </div>
+            <div><input type="text" id="search-input" placeholder="pokémon name or ID"></div>
+
+        </section>
+    </header>
+
 
     <main>
 
-        <section>
+        <section class="content-wrapper">
 
-            <div class="pokemon-content" id="pokedex-gallery">
-
-            </div>
+            <div class="pokemon-content" id="pokedex-gallery"></div>
 
         </section>
 
-        
+
 
     </main>
 </body>

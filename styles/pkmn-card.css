@@ -1,5 +1,9 @@
-.pokemon-card-header{
-    text-align: center;
+.pokemon-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    background-color: #e0e0e0;
 }
 
 .pokemon-image-container {
@@ -7,23 +11,30 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 300px;
 }
 
 .pkmn-img {
-    height: 200px;
+    height: 220px;
+    width: 220px;
 }
 
-.icon-type-img-container {
-    display: flex;
-    justify-content: center;
-}
-
-.icon {
-    max-width: 100px;
+.type-icon {
+    width: 120px;
+    border-radius: 4px;
 }
 
 .pokemon-card {
-    margin: 8px;
+    margin-top: 24px;
+    text-align: center;
     border-radius: 8px;
+}
 
+.pkmn-card-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    gap: 6px;
+    background-color: #e0e0e0;
 }

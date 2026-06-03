@@ -1,14 +1,14 @@
 function getPokemonInformationTemplate(pokeResponse, pokemonBgClass) {
     let pokemonImg = pokeResponse.sprites.other['official-artwork'].front_default || pokeResponse.sprites.front_default;
     return `
-        <div class="pokemon-card ${pokemonBgClass}">
+        <div class="pokemon-card">
             <div class="pokemon-card-header">
             <h2>${pokeResponse.name.toUpperCase()}</h2>
             </div>
-            <div class="pokemon-image-container">
+            <div class="pokemon-image-container ${pokemonBgClass}">
                 <img class="pkmn-img" src="${pokemonImg}" alt="${pokeResponse.name}">
             </div>
-            <div class="icon-type-img-container">${renderTypes(pokeResponse)}</div>
+            <div class="pkmn-card-footer">${renderTypes(pokeResponse)}</div>
         </div>
     `
 }

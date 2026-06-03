@@ -44,7 +44,7 @@ async function loadPokemon() {
         for (let i = 0; i < pkmnListData.results.length; i++) {
             allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
         }
-        
+
         renderAllPokemon();
 
     } catch (error) {
@@ -83,7 +83,7 @@ function renderTypes(pokeResponse) {
         let urlParts = typeUrl.split('/');
         let typeId = urlParts[urlParts.length - 2];
         let bgClass = "bg_" + typeName;
-        typeText += `<span><img class="icon" src="${ICON_URL}${typeId}.png" alt="${typeName}"></span>`;
+        typeText += `<img class="type-icon" src="${ICON_URL}${typeId}.png" alt="${typeName}">`;
     }
 
     return typeText;
