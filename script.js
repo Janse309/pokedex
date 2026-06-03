@@ -43,10 +43,14 @@ async function loadPokemon() {
     try {
         let pkmnListData = await fetchPokemonList();
         for (let i = 0; i < pkmnListData.results.length; i++) {
-            allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
+            const singlePokemon = await loadPokemonDetails(pkmnListData.results[i].url);
+            renderTypes(singlePokemon);
+            allPokemon.push(singlePokemon);
         }
 
         renderAllPokemon();
+
+        OFFSET += LIMIT;
 
     } catch (error) {
         console.error("Fehler beim laden der Pokemon", error);
