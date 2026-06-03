@@ -1,11 +1,29 @@
-function getPokemonInformationTemplate(pokeResponse) {
+function getPokemonInformationTemplate(pokeResponse, pokemonBgClass) {
+    let pokemonImg = pokeResponse.sprites.other['official-artwork'].front_default || pokeResponse.sprites.front_default;
     return `
-            <div class="pokemon-card">
-                <div class="pokemon-image-container">
-                    <h2>${pokeResponse.name.toUpperCase()}</h2>
-                    <img class="pkmn-img" src="${pokeResponse.sprites.other['official-artwork'].front_default}" alt="${pokeResponse.name}">
-                </div>
-                <div class="type-text">${renderTypes(pokeResponse)}</div>
+        <div class="pokemon-card ${pokemonBgClass}">
+            <div class="pokemon-card-header">
+            <h2>${pokeResponse.name.toUpperCase()}</h2>
             </div>
+            <div class="pokemon-image-container">
+                <img class="pkmn-img" src="${pokemonImg}" alt="${pokeResponse.name}">
+            </div>
+            <div class="icon-type-img-container">${renderTypes(pokeResponse)}</div>
+        </div>
     `
 }
+
+// function getPokemonInformationTemplate(pokeResponse, pokemonBgClass) {
+//     return `
+//         <div class="pokemon-card ${pokemonBgClass}">
+//             <div class="pokemon-header">
+//                 <h2>${pokeResponse.name.toUpperCase()}</h2>
+//                 <img src="${pokeResponse.sprites.other['official-artwork'].front_default}" alt="${pokeResponse.name}">
+//             </div>
+            
+//             <div class="pokemon-types">
+//                 ${renderTypes(pokeResponse)}
+//             </div>
+//         </div>
+//     `;
+// }
