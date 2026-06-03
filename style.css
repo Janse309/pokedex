@@ -23,6 +23,26 @@
     color: #F9CF30;
 }
 
+.search-input {
+    height: 32px;
+    width: 200px;
+}
+
+.search-section {
+    display: flex;
+    gap: 4px;
+}
+
+.search-btn {
+    background: none;
+    outline: none;
+    border: none
+}
+
+.search-btn img{
+    height: 24px;
+}
+
 .pokemon-main-content {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
