@@ -7,7 +7,7 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
                 <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
             </div>
             <div class="pokemon-image-container ${pokemonBgClass}">
-                <img class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}">
+                <button class="pokemon-img-button"><img class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
         </div>
