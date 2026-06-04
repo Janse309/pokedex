@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./styles/backgroundcolors.css">
     <link rel="stylesheet" href="./styles/pkmn-card.css">
     <link rel="stylesheet" href="./styles/fonts.css">
+    <link rel="stylesheet" href="./styles/assets.css">
 
     <script src="./scripts/template.js"></script>
     <script src="./script.js"></script>
@@ -27,8 +28,7 @@
                 <input class="search-input" type="text" id="search-input" placeholder="pokémon name or ID">
                 <button class="search-btn"><img src="./assets/icon/Vector.svg" alt="search"></button>
             </div>
-
-        </section>
+        </section>   
     </header>
 
 
@@ -37,10 +37,12 @@
         <section class="content-wrapper">
 
             <div class="pokemon-main-content" id="pokedex-gallery"></div>
-
+            <div class="center-button">
+                <button class="load-more-button" onclick="loadPokemon()">load more</button>
+            </div>
         </section>
 
-        <button onclick="loadPokemon()">load more</button>
+
 
 
 

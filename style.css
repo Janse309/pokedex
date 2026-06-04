@@ -26,6 +26,10 @@
 .search-input {
     height: 32px;
     width: 200px;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    border-radius: 4px;
+    border: none;
 }
 
 .search-section {

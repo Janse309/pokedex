@@ -1,0 +1,17 @@
+.center-button {
+    display: flex;
+    justify-content: center;
+}
+
+.load-more-button {
+    width: 250px;
+    padding: 16px;
+    margin-top: 20px;
+    background-color: #DC0A2D;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+    font-size: 24px;
+}
