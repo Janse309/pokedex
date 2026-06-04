@@ -2,7 +2,6 @@ let BASE_URL = "https://pokeapi.co/api/v2/";
 // let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
 let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
 
-
 let allPokemon = [];
 let currentPokemon = [];
 
@@ -16,8 +15,8 @@ async function init() {
 
 async function fetchPokemonList() {
     let pokemonListUrl = `${BASE_URL}pokemon?limit=${LIMIT}&offset=${OFFSET}`; // den ersten Link in der Poke API für Limits
-    let fetchPkmnResponse = await fetch(pokemonListUrl);
-    return await fetchPkmnResponse.json();
+    let fetchPkmnResponse = await fetch(pokemonListUrl); // pokemon informationen herunter laden
+    return await fetchPkmnResponse.json(); // hier wird es zu json umgewandelt
 }
 
 async function loadPokemonDetails(pokemonDetailUrl) {
