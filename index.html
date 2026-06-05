@@ -7,10 +7,11 @@
     <title>Mein Pokedex</title>
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/standart.css">
-    <link rel="stylesheet" href="./styles/backgroundcolors.css">
+    <link rel="stylesheet" href="./styles/colors.css">
     <link rel="stylesheet" href="./styles/pkmn-card.css">
     <link rel="stylesheet" href="./styles/fonts.css">
     <link rel="stylesheet" href="./styles/assets.css">
+    <link rel="stylesheet" href="./styles/dialog.css">
 
     <script src="./scripts/template.js"></script>
     <script src="./script.js"></script>
@@ -25,28 +26,28 @@
                 <h1 class="page-headline">Pokedex</h1>
             </div>
             <div class="search-section">
-                <input class="search-input" type="text" id="search-input" placeholder="pokémon name or ID">
-                <button class="search-btn"><img src="./assets/icon/Vector.svg" alt="search"></button>
+                <input data-id="search-input" id="search-input-field" class="search-input" type="text" placeholder="pokémon name or ID">
+                <button data-id=”search-button” class="search-btn"><img src="./assets/icon/Vector.svg" alt="search"></button>
             </div>
-        </section>   
+        </section>
     </header>
 
 
-    <main>
-
+    <main data-id="content">
         <section class="content-wrapper">
-
             <div class="pokemon-main-content" id="pokedex-gallery"></div>
             <div class="center-button">
-                <button class="load-more-button" onclick="loadPokemon()">load more</button>
+                <button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>
             </div>
+        
+
+        <dialog class="pokemon-dialog" data-id="dialog" id="pokemon-dialog"></dialog>
+
         </section>
 
-
-
-
-
     </main>
+
+    
 
     <footer><a target="_blank" href="https://icons8.com/icon/1X9wUcuHxlS2/pokemon-pointer">Zeiger</a> icon by <a
             target="_blank" href="https://icons8.com">Icons8</a></footer>
