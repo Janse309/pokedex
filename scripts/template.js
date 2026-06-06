@@ -37,6 +37,60 @@ function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
     `
 }
 
+function getPokemonMainInformationTempalte() {
+    return`
+        <table>
+            <tr>
+                <th>Weight:</th>
+                <th>gewicht</th>
+            </tr>
+            <tr>
+                <th>Height:</th>
+                <td>größe</td>
+            </tr>
+            <tr>
+                <th>Abilities:</th>
+                <td>ability</td>
+            </tr>
+            <tr>
+                <th>Flavour Text:</th>
+                <td>text</td>
+            </tr>
+        </table> 
+    `
+}
+
+function getStatsTemplate() {
+    return`
+        <table>
+            <tr>
+                <th>HP</th>
+                <th>HP-Wert</th>
+            </tr>
+            <tr>
+                <th>ATK:</th>
+                <td>ATK-Wert</td>
+            </tr>
+            <tr>
+                <th>DEF:</th>
+                <td>DEF-Wert</td>
+            </tr>
+            <tr>
+                <th>S-ATK:</th>
+                <td>S-ATK-Wert</td>
+            </tr>
+            <tr>
+                <th>S-DEF:</th>
+                <td>S-DEF-Wert</td>
+            </tr>
+            <tr>
+                <th>SPEED:</th>
+                <td>SPEED-Wert</td>
+            </tr>
+        </table> 
+    `
+}
+
 //About
 // base stats
 // evo chain

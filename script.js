@@ -2,6 +2,7 @@ let BASE_URL = "https://pokeapi.co/api/v2/";
 // let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
 let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
 let IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+let FLAVOUR_TEXT = "https://pokeapi.co/api/v2/pokemon-species/{name oder id}/(ruby)";
 
 let allPokemon = [];
 let currentPokemon = [];
