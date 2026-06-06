@@ -1,2 +1,5 @@
 data-ids vergeben
 die informationen für die tables rendern (important)
+loading spinner
+function mit nem switch
+next button und prev button mit function

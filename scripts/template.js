@@ -6,7 +6,7 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
                 <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
                 <p>#${pokemon.id}</p>
             </div>
-            <div class="pokemon-image-container ${pokemonBgClass}">
+            <div class="pokemon-card-image ${pokemonBgClass}">
                 <button onclick="openDialog(${pokemon.id})" class="pokemon-img-button"><img class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
@@ -17,13 +17,17 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
 function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
     return `
         <div class="dialog-container">
-            <div class="dialog-header ${pokemonBgClass}">
-                <div class="name-and-id">
+            <div class="dialog-image-container ${pokemonBgClass}">
+                <div class="dialog-header">
                     <span>#${pokemon.id}</span>
                     <h2 class="pokemon-name">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
-                    <p>X</p>
+                    <button class="control-btn close-btn" onclick="closeDialog()"><img class="close-img" src="./assets/icon/close.svg" alt="close"></button>
                 </div>
-                    <img class="pkmn-img dialog-img" src="${IMG_URL + pokemon.id}.png" alt="${pokemon.name}">
+                <div>
+                    <button data-id="prev-button" class="control-btn"><img src="./assets/icon/left.svg" alt="prev"></button>
+                    <img data-id="dialog-image" class="pkmn-img dialog-img" src="${IMG_URL + pokemon.id}.png" alt="${pokemon.name}">
+                    <button data-id="next-button" class="control-btn"><img src="./assets/icon/right.svg" alt="next"></button>
+                </div>
             </div>
             <div class="dialog-type-container">
                 <div class="type-gap">${renderTypes(pokemon)}</div>
@@ -31,37 +35,42 @@ function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
             <div class="information-btn-section">
                 <button class="dialog-button"><h3 class="${fontColor}">about</h3></button>
                 <button class="dialog-button"><h3 class="${fontColor}">base stats</h3></button>
-                <button class="dialog-button"><h3 class="${fontColor}">evon chain</h3></button>
+                <button class="dialog-button"><h3 class="${fontColor}">evo chain</h3></button>
+            </div>
+            <div class="dialog-about-content" id="dialog-about-content">
+                <p>Loading...</p>
             </div>
         </div>
     `
 }
 
-function getPokemonMainInformationTempalte() {
-    return`
+function getPokemonMainInformationTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor) {
+
+    return `
         <table>
-            <tr>
+            <tr class="flavour-text-container">
+                <th class="pokemon-description">Description:</th>
+                <td class="${fontColor}">${flavorText}</td>
+            </tr>
+            <tr class="table-row">
                 <th>Weight:</th>
-                <th>gewicht</th>
+                <td class="${fontColor}">${weightKg}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>Height:</th>
-                <td>größe</td>
+                <td class="${fontColor}">${heightM}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>Abilities:</th>
-                <td>ability</td>
+                <td class="${fontColor}">${abilitiesList}</td>
             </tr>
-            <tr>
-                <th>Flavour Text:</th>
-                <td>text</td>
-            </tr>
+
         </table> 
     `
 }
 
 function getStatsTemplate() {
-    return`
+    return `
         <table>
             <tr>
                 <th>HP</th>
