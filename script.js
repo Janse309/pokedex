@@ -76,10 +76,14 @@ function renderTypes(pokemon) {
 function openDialog(id) {
     let dialog = document.getElementById('pokemon-dialog');
 
-    let pokemon = allPokemon.find(pokemon => pokemon.id === id);
+    // Index im aktuellen Array finden und global speichern
+    currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
+    
+    let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
     let pokemonBgClass = "bg_" + mainType;
     let fontColor = "color-" + mainType;
+    
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
     getMainPokemonInformation(pokemon);
     dialog.showModal();
@@ -101,7 +105,7 @@ async function getMainPokemonInformation(pokemon) {
             abilitiesList += ", ";
         }
     }
-    let weightKg = (pokemon.weight).toFixed() + "kg";
+    let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
     let heightM = (pokemon.height * 10).toFixed() + "cm";
     let flavorText = await fetchFlavorText(pokemon.id);
     let aboutContainer = document.getElementById('dialog-about-content');
@@ -133,10 +137,41 @@ async function fetchFlavorText(pokemonId) {
             }
         }
     }
-
     return goldEntry ? goldEntry.flavor_text.replace(/[\n\f]/g, ' ') : 'No description available.';
 }
 
+function updateDialog() {
+    let dialog = document.getElementById('pokemon-dialog');
+    let pokemon = currentPokemon[currentPokemonIndex];
+
+    let mainType = pokemon.types[0].type.name;
+    let pokemonBgClass = "bg_" + mainType;
+    let fontColor = "color-" + mainType;
+
+    // Dialog-Inhalt mit den neuen Pokémon-Daten austauschen
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
+    getMainPokemonInformation(pokemon);
+}
+
+function nextPokemon() {
+    currentPokemonIndex++; // Index um 1 erhöhen
+    
+    // Wenn wir am Ende sind, springe zum Anfang (0)
+    if (currentPokemonIndex >= currentPokemon.length) {
+        currentPokemonIndex = 0; 
+    }
+    updateDialog();
+}
+
+function prevPokemon() {
+    currentPokemonIndex--; // Index um 1 verringern
+    
+    // Wenn wir am Anfang sind, springe zum Ende
+    if (currentPokemonIndex < 0) {
+        currentPokemonIndex = currentPokemon.length - 1;
+    }
+    updateDialog();
+}
 
 
 

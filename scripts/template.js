@@ -15,6 +15,7 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
 }
 
 function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
+    
     return `
         <div class="dialog-container">
             <div class="dialog-image-container ${pokemonBgClass}">
@@ -24,9 +25,9 @@ function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
                     <button class="control-btn close-btn" onclick="closeDialog()"><img class="close-img" src="./assets/icon/close.svg" alt="close"></button>
                 </div>
                 <div>
-                    <button data-id="prev-button" class="control-btn"><img src="./assets/icon/left.svg" alt="prev"></button>
+                    <button data-id="prev-button" class="control-btn" onclick="prevPokemon(${currentPokemonIndex})"><img src="./assets/icon/left.svg" alt="prev"></button>
                     <img data-id="dialog-image" class="pkmn-img dialog-img" src="${IMG_URL + pokemon.id}.png" alt="${pokemon.name}">
-                    <button data-id="next-button" class="control-btn"><img src="./assets/icon/right.svg" alt="next"></button>
+                    <button data-id="next-button" class="control-btn" onclick="nextPokemon(${currentPokemonIndex})"><img src="./assets/icon/right.svg" alt="next"></button>
                 </div>
             </div>
             <div class="dialog-type-container">
