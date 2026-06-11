@@ -1,4 +1,4 @@
-function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
+function getPokemonInformationTemplate(pokemon, pokemonBgClass) { // card
     let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
     return `   
         <div class="pokemon-card">
@@ -7,13 +7,14 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) {
                 <p>#${pokemon.id}</p>
             </div>
             <div class="pokemon-card-image ${pokemonBgClass}">
-                <button onclick="openDialog(${pokemon.id})" class="pokemon-img-button"><img class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
+                <button data-id="card" onclick="openDialog(${pokemon.id})" class="pokemon-img-button"><img data-id="card-image" class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
         </div>
     `
 }
 
+// dialog
 function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
     
     return `
@@ -22,7 +23,7 @@ function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
                 <div class="dialog-header">
                     <span>#${pokemon.id}</span>
                     <h2 class="pokemon-name">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
-                    <button class="control-btn close-btn" onclick="closeDialog()"><img class="close-img" src="./assets/icon/close.svg" alt="close"></button>
+                    <button data-id="close-dialog-button" class="control-btn close-btn" onclick="closeDialog()"><img class="close-img" src="./assets/icon/close.svg" alt="close"></button>
                 </div>
                 <div>
                     <button data-id="prev-button" class="control-btn" onclick="prevPokemon(${currentPokemonIndex})"><img src="./assets/icon/left.svg" alt="prev"></button>
@@ -34,18 +35,18 @@ function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
                 <div class="type-gap">${renderTypes(pokemon)}</div>
             </div>
             <div class="information-btn-section">
-                <button class="dialog-button"><h3 class="${fontColor}">about</h3></button>
-                <button class="dialog-button"><h3 class="${fontColor}">base stats</h3></button>
-                <button class="dialog-button"><h3 class="${fontColor}">evo chain</h3></button>
+                <button onclick="changeTab('main')" id="about-btn" class="dialog-button"><h3 class="${fontColor}">about</h3></button>
+                <button onclick="changeTab('base-stats')" id="base-stats-btn" class="dialog-button"><h3 class="${fontColor}">base stats</h3></button>
+                <button onclick="changeTab('evo-chain')" id="evo-chain-btn" class="dialog-button"><h3 class="${fontColor}">evo chain</h3></button>
             </div>
-            <div class="dialog-about-content" id="dialog-about-content">
+            <div class="dialog-about-content" id="switch-case-section">
                 <p>Loading...</p>
             </div>
         </div>
     `
 }
 
-function getPokemonMainInformationTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor) {
+function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor) {
 
     return `
         <table>
@@ -70,37 +71,42 @@ function getPokemonMainInformationTemplate(weightKg, heightM, abilitiesList, fla
     `
 }
 
-function getStatsTemplate() {
+function getPokemonStatsTemplate(pokemon, fontColor) {
+    // Hilfsvariable, um die Stats leicht herauszusuchen
+    let stats = {};
+    pokemon.stats.forEach(s => {
+        stats[s.stat.name] = s.base_stat;
+    });
+
     return `
         <table>
-            <tr>
-                <th>HP</th>
-                <th>HP-Wert</th>
+            <tr class="table-row">
+                <th>HP:</th>
+                <td class="${fontColor}">${stats['hp'] || 0}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>ATK:</th>
-                <td>ATK-Wert</td>
+                <td class="${fontColor}">${stats['attack'] || 0}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>DEF:</th>
-                <td>DEF-Wert</td>
+                <td class="${fontColor}">${stats['defense'] || 0}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>S-ATK:</th>
-                <td>S-ATK-Wert</td>
+                <td class="${fontColor}">${stats['special-attack'] || 0}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>S-DEF:</th>
-                <td>S-DEF-Wert</td>
+                <td class="${fontColor}">${stats['special-defense'] || 0}</td>
             </tr>
-            <tr>
+            <tr class="table-row">
                 <th>SPEED:</th>
-                <td>SPEED-Wert</td>
+                <td class="${fontColor}">${stats['speed'] || 0}</td>
             </tr>
         </table> 
-    `
+    `;
 }
-
 //About
 // base stats
 // evo chain

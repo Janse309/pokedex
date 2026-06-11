@@ -6,9 +6,12 @@ let FLAVOUR_TEXT = "https://pokeapi.co/api/v2/pokemon-species/";
 
 let allPokemon = [];
 let currentPokemon = [];
-
 let OFFSET = 0;
 let LIMIT = 25;
+
+let activePokemonInformation = "main";
+let about = {};
+let baseStats = {};
 
 async function init() {
     await loadPokemon();
@@ -27,19 +30,6 @@ async function loadPokemonDetails(pokemonDetailUrl) {
     return await response.json();
 }
 
-function renderAllPokemon() {
-    let pokemonContainer = document.getElementById('pokedex-gallery');
-
-    let htmlContent = "";
-    for (let index = 0; index < allPokemon.length; index++) {
-        let pokemon = allPokemon[index];
-        let mainType = pokemon.types[0].type.name;
-        let pokemonBgClass = "bg_" + mainType;
-        htmlContent += getPokemonInformationTemplate(pokemon, pokemonBgClass);
-    }
-    pokemonContainer.innerHTML = htmlContent;
-}
-
 async function loadPokemon() {
 
     try {
@@ -56,62 +46,6 @@ async function loadPokemon() {
         console.error("Fehler beim laden der Pokemon", error);
 
     }
-}
-
-function renderTypes(pokemon) {
-    let typeText = "";
-
-    for (let i = 0; i < pokemon.types.length; i++) {
-        let typeName = pokemon.types[i].type.name;
-        let typeUrl = pokemon.types[i].type.url;
-        let urlParts = typeUrl.split('/');
-        let typeId = urlParts[urlParts.length - 2];
-
-        typeText += `<img class="type-icon" src="${ICON_URL}${typeId}.png" alt="${typeName}">`;
-    }
-
-    return typeText;
-}
-
-function openDialog(id) {
-    let dialog = document.getElementById('pokemon-dialog');
-
-    // Index im aktuellen Array finden und global speichern
-    currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
-    
-    let pokemon = currentPokemon[currentPokemonIndex];
-    let mainType = pokemon.types[0].type.name;
-    let pokemonBgClass = "bg_" + mainType;
-    let fontColor = "color-" + mainType;
-    
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
-    getMainPokemonInformation(pokemon);
-    dialog.showModal();
-}
-
-function closeDialog() {
-    let dialog = document.getElementById('pokemon-dialog');
-    dialog.close();
-}
-
-// dialog functions
-
-async function getMainPokemonInformation(pokemon) {
-    let abilitiesList = "";
-    for (let i = 0; i < pokemon.abilities.length; i++) {
-        let abilityName = pokemon.abilities[i].ability.name;
-        abilitiesList += abilityName.charAt(0).toUpperCase() + abilityName.slice(1);
-        if (i < pokemon.abilities.length - 1) {
-            abilitiesList += ", ";
-        }
-    }
-    let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
-    let heightM = (pokemon.height * 10).toFixed() + "cm";
-    let flavorText = await fetchFlavorText(pokemon.id);
-    let aboutContainer = document.getElementById('dialog-about-content');
-    let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-    aboutContainer.innerHTML = getPokemonMainInformationTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
 }
 
 async function fetchFlavorText(pokemonId) {
@@ -140,9 +74,80 @@ async function fetchFlavorText(pokemonId) {
     return goldEntry ? goldEntry.flavor_text.replace(/[\n\f]/g, ' ') : 'No description available.';
 }
 
+function renderAllPokemon() {
+    let pokemonContainer = document.getElementById('pokedex-gallery');
+
+    let htmlContent = "";
+    for (let index = 0; index < allPokemon.length; index++) {
+        let pokemon = allPokemon[index];
+        let mainType = pokemon.types[0].type.name;
+        let pokemonBgClass = "bg_" + mainType;
+        htmlContent += getPokemonInformationTemplate(pokemon, pokemonBgClass);
+    }
+    pokemonContainer.innerHTML = htmlContent;
+}
+
+function renderTypes(pokemon) {
+    let typeText = "";
+
+    for (let i = 0; i < pokemon.types.length; i++) {
+        let typeName = pokemon.types[i].type.name;
+        let typeUrl = pokemon.types[i].type.url;
+        let urlParts = typeUrl.split('/');
+        let typeId = urlParts[urlParts.length - 2];
+
+        typeText += `<img class="type-icon" src="${ICON_URL}${typeId}.png" alt="${typeName}">`;
+    }
+
+    return typeText;
+}
+
+function openDialog(id) {
+    let dialog = document.getElementById('pokemon-dialog');
+
+    // Index im aktuellen Array finden und global speichern
+    currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
+    activePokemonInformation = 'main';
+
+    let pokemon = currentPokemon[currentPokemonIndex];
+    let mainType = pokemon.types[0].type.name;
+    let pokemonBgClass = "bg_" + mainType;
+    let fontColor = "color-" + mainType;
+
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
+    getMainPokemonInformation(pokemon);
+    dialog.showModal();
+}
+
+function closeDialog() {
+    let dialog = document.getElementById('pokemon-dialog');
+    dialog.close();
+}
+
+function nextPokemon() {
+    currentPokemonIndex++; // Index um 1 erhöhen
+
+    // Wenn wir am Ende sind, springe zum Anfang (0)
+    if (currentPokemonIndex >= currentPokemon.length) {
+        currentPokemonIndex = 0;
+    }
+    updateDialog();
+}
+
+function prevPokemon() {
+    currentPokemonIndex--; // Index um 1 verringern
+
+    // Wenn wir am Anfang sind, springe zum Ende
+    if (currentPokemonIndex < 0) {
+        currentPokemonIndex = currentPokemon.length - 1;
+    }
+    updateDialog();
+}
+
 function updateDialog() {
     let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
+    activePokemonInformation = 'main';
 
     let mainType = pokemon.types[0].type.name;
     let pokemonBgClass = "bg_" + mainType;
@@ -153,29 +158,70 @@ function updateDialog() {
     getMainPokemonInformation(pokemon);
 }
 
-function nextPokemon() {
-    currentPokemonIndex++; // Index um 1 erhöhen
-    
-    // Wenn wir am Ende sind, springe zum Anfang (0)
-    if (currentPokemonIndex >= currentPokemon.length) {
-        currentPokemonIndex = 0; 
-    }
-    updateDialog();
+// dialog functions (der inhalt der einzelnen cases);
+
+function changeTab(tabName) {
+    activePokemonInformation = tabName;
+    renderDetailInfo();
+    updateButtonStyles(); // Optionale Funktion, um den aktiven Button zu markieren
 }
 
-function prevPokemon() {
-    currentPokemonIndex--; // Index um 1 verringern
-    
-    // Wenn wir am Anfang sind, springe zum Ende
-    if (currentPokemonIndex < 0) {
-        currentPokemonIndex = currentPokemon.length - 1;
+async function renderDetailInfo() {
+    let container = document.getElementById('switch-case-section');
+    let pokemon = currentPokemon[currentPokemonIndex]; // Das aktuell offene Pokémon
+    let mainType = pokemon.types[0].type.name;
+    let fontColor = "color-" + mainType;
+
+    switch (activePokemonInformation) {
+        case "main":
+            // Hier nutzen wir deine bestehende Funktion für die "About"-Infos
+            await getMainPokemonInformation(pokemon);
+            break;
+
+        case "base-stats":
+            // Hier übergeben wir die echten Stats an dein Stats-Template
+            container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
+            break;
+
+        case "evo-chain":
+            container.innerHTML = `<p class="${fontColor}">Evolutionskette folgt...</p>`;
+            break;
     }
-    updateDialog();
 }
 
+async function getMainPokemonInformation(pokemon) {
+    let abilitiesList = "";
+    for (let i = 0; i < pokemon.abilities.length; i++) {
+        let abilityName = pokemon.abilities[i].ability.name;
+        abilitiesList += abilityName.charAt(0).toUpperCase() + abilityName.slice(1);
+        if (i < pokemon.abilities.length - 1) {
+            abilitiesList += ", ";
+        }
+    }
+    let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
+    let heightM = (pokemon.height * 10).toFixed() + "cm";
+    let flavorText = await fetchFlavorText(pokemon.id);
+    let aboutContainer = document.getElementById('switch-case-section');
+    let mainType = pokemon.types[0].type.name;
+    let fontColor = "color-" + mainType;
+    aboutContainer.innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
+}
 
+function updateButtonStyles() {
+    // Entferne die aktive Klasse von allen Buttons
+    document.getElementById('about-btn').classList.remove('active');
+    document.getElementById('base-stats-btn').classList.remove('active');
+    document.getElementById('evo-chain-btn').classList.remove('active');
 
-
+    // Füge sie dem aktuell aktiven Button hinzu
+    if (activePokemonInformation === 'main') {
+        document.getElementById('about-btn').classList.add('active');
+    } else if (activePokemonInformation === 'stats') {
+        document.getElementById('base-stats-btn').classList.add('active');
+    } else if (activePokemonInformation === 'evo-chain') {
+        document.getElementById('evo-chain-btn').classList.add('active');
+    }
+}
 
 
 // async function fetchPokemon(id) {

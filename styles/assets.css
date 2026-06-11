@@ -25,13 +25,10 @@
     margin: 0;
 }
 
-
-
 .close-btn{
     height: 45px; 
-    filter: invert(1);
 }
 
 .close-btn img{
-    height: 45px; 
+    height: 45px;
 }
