@@ -69,22 +69,23 @@
 .dialog-button:active{
     background-color: transparent;
 }
+
 table{
     padding: 0 16px 0 16px;
 }
 
-.table-row{
+.about-table-row{
     display: flex;
-    height: 35px;
+    height: 32px;
     justify-content: space-between;
     align-items: center;
 }
 
-.table-row td{
+.about-table-row td{
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    width: 150px;
+    width: 175px;
 }
 
 .flavour-text-container{

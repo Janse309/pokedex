@@ -54,15 +54,15 @@ function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColo
                 <th class="pokemon-description">Description:</th>
                 <td class="${fontColor}">${flavorText}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="about-table-row">
                 <th>Weight:</th>
                 <td class="${fontColor}">${weightKg}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="about-table-row">
                 <th>Height:</th>
                 <td class="${fontColor}">${heightM}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="about-table-row">
                 <th>Abilities:</th>
                 <td class="${fontColor}">${abilitiesList}</td>
             </tr>
@@ -74,8 +74,8 @@ function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColo
 function getPokemonStatsTemplate(pokemon, fontColor) {
     // Hilfsvariable, um die Stats leicht herauszusuchen
     let stats = {};
-    pokemon.stats.forEach(s => {
-        stats[s.stat.name] = s.base_stat;
+    pokemon.stats.forEach(pokemonStats => {
+        stats[pokemonStats.stat.name] = pokemonStats.base_stat;
     });
 
     return `

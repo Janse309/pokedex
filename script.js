@@ -104,7 +104,6 @@ function renderTypes(pokemon) {
 
 function openDialog(id) {
     let dialog = document.getElementById('pokemon-dialog');
-
     // Index im aktuellen Array finden und global speichern
     currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
     activePokemonInformation = 'main';
@@ -172,6 +171,10 @@ async function renderDetailInfo() {
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
 
+    switchPokemonInformation();
+}
+
+async function switchPokemonInformation() {
     switch (activePokemonInformation) {
         case "main":
             // Hier nutzen wir deine bestehende Funktion für die "About"-Infos
@@ -182,7 +185,7 @@ async function renderDetailInfo() {
             // Hier übergeben wir die echten Stats an dein Stats-Template
             container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
             break;
-
+            
         case "evo-chain":
             container.innerHTML = `<p class="${fontColor}">Evolutionskette folgt...</p>`;
             break;
@@ -193,7 +196,7 @@ async function getMainPokemonInformation(pokemon) {
     let abilitiesList = "";
     for (let i = 0; i < pokemon.abilities.length; i++) {
         let abilityName = pokemon.abilities[i].ability.name;
-        abilitiesList += abilityName.charAt(0).toUpperCase() + abilityName.slice(1);
+        abilitiesList += abilityName + abilityName;
         if (i < pokemon.abilities.length - 1) {
             abilitiesList += ", ";
         }
