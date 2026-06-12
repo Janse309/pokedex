@@ -1,4 +1,4 @@
-.pokemon-dialog{
+.pokemon-dialog {
     height: 640px;
     width: 360px;
     font-family: 'Poppins', sans-serif;
@@ -8,25 +8,25 @@
     border-radius: 24px;
 }
 
-.dialog-container{
+.dialog-container {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-.dialog-image-container{
+.dialog-image-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;  
+    width: 100%;
 }
 
-.dialog-image-container span{
+.dialog-image-container span {
     font-weight: bold;
 }
 
-.dialog-header{
+.dialog-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,15 +35,15 @@
     padding: 8px 16px 0 16px;
 }
 
-.dialog-header span{
+.dialog-header span {
     color: white;
 }
 
-.pokemon-name{
+.pokemon-name {
     color: white;
 }
 
-.dialog-type-container{
+.dialog-type-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,44 +51,48 @@
     margin-top: 8px;
 }
 
-.type-gap{
+.type-gap {
     display: flex;
     gap: 6px;
 }
 
-.information-btn-section{
-    margin-top: 8px; 
+.information-btn-section {
+    margin-top: 8px;
 }
 
-.dialog-button{
+.dialog-button {
     outline: none;
     border: none;
     background: none;
 }
 
-.dialog-button:active{
+.dialog-button:active {
     background-color: transparent;
 }
 
-table{
+.dialog-button:hover{
+    border-bottom: 2px solid #DC0A2D;
+}
+
+table {
     padding: 0 16px 0 16px;
 }
 
-.about-table-row{
+.about-table-row {
     display: flex;
     height: 32px;
     justify-content: space-between;
     align-items: center;
 }
 
-.about-table-row td{
+.about-table-row td {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     width: 175px;
 }
 
-.flavour-text-container{
+.flavour-text-container {
     margin-top: 8px;
     display: flex;
     align-items: center;
@@ -97,6 +101,30 @@ table{
     margin-bottom: 16px;
 }
 
-.pokemon-description{
+.pokemon-description {
     margin-bottom: 8px;
 }
+
+.base-stats-table{
+    margin-top: 8px;
+}
+
+.base-stats-table-row {
+    display: flex;
+    height: 32px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.base-stats-table-row td {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 175px;
+    font-weight: bold;
+}
+
+.active{
+    border-bottom: 2px solid #DC0A2D;
+}
+
