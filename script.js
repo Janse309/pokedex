@@ -16,7 +16,6 @@ let baseStats = {};
 async function init() {
     await loadPokemon();
     currentPokemon = allPokemon;
-
 }
 
 async function fetchPokemonList() {
@@ -35,8 +34,7 @@ async function loadPokemon() {
     try {
         let pkmnListData = await fetchPokemonList();
         for (let i = 0; i < pkmnListData.results.length; i++) {
-            const singlePokemon = await loadPokemonDetails(pkmnListData.results[i].url);
-            allPokemon.push(singlePokemon);
+            allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
         }
 
         renderAllPokemon();
@@ -44,7 +42,6 @@ async function loadPokemon() {
 
     } catch (error) {
         console.error("Fehler beim laden der Pokemon", error);
-
     }
 }
 
@@ -171,10 +168,6 @@ async function renderDetailInfo() {
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
 
-    switchPokemonInformation();
-}
-
-async function switchPokemonInformation() {
     switch (activePokemonInformation) {
         case "main":
             // Hier nutzen wir deine bestehende Funktion für die "About"-Infos
@@ -185,7 +178,7 @@ async function switchPokemonInformation() {
             // Hier übergeben wir die echten Stats an dein Stats-Template
             container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
             break;
-            
+
         case "evo-chain":
             container.innerHTML = `<p class="${fontColor}">Evolutionskette folgt...</p>`;
             break;
@@ -219,7 +212,7 @@ function updateButtonStyles() {
     // Füge sie dem aktuell aktiven Button hinzu
     if (activePokemonInformation === 'main') {
         document.getElementById('about-btn').classList.add('active');
-    } else if (activePokemonInformation === 'stats') {
+    } else if (activePokemonInformation === 'base-stats') {
         document.getElementById('base-stats-btn').classList.add('active');
     } else if (activePokemonInformation === 'evo-chain') {
         document.getElementById('evo-chain-btn').classList.add('active');
