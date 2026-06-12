@@ -112,12 +112,23 @@ function openDialog(id) {
 
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
     getMainPokemonInformation(pokemon);
+    updateButtonStyles();
     dialog.showModal();
 }
 
 function closeDialog() {
     let dialog = document.getElementById('pokemon-dialog');
     dialog.close();
+}
+
+function outsideClick(event) {
+    if (event.target.id === "pokemon-dialog") {
+        document.getElementById('pokemon-dialog').close();
+    }
+}
+
+function outsideClick() {
+    document.getElementById('pokemon-dialog').close();
 }
 
 function nextPokemon() {
@@ -152,6 +163,7 @@ function updateDialog() {
     // Dialog-Inhalt mit den neuen Pokémon-Daten austauschen
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
     getMainPokemonInformation(pokemon);
+    updateButtonStyles();
 }
 
 // dialog functions (der inhalt der einzelnen cases);
