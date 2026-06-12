@@ -18,7 +18,7 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) { // card
 function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
     
     return `
-        <div class="dialog-container">
+        <div class="dialog-container" onclick="event.stopPropagation()">
             <div class="dialog-image-container ${pokemonBgClass}">
                 <div class="dialog-header">
                     <span>#${pokemon.id}</span>
@@ -79,28 +79,28 @@ function getPokemonStatsTemplate(pokemon, fontColor) {
     });
 
     return `
-        <table>
-            <tr class="table-row">
+        <table class="base-stats-table">
+            <tr class="base-stats-table-row">
                 <th>HP:</th>
                 <td class="${fontColor}">${stats['hp'] || 0}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="base-stats-table-row">
                 <th>ATK:</th>
                 <td class="${fontColor}">${stats['attack'] || 0}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="base-stats-table-row">
                 <th>DEF:</th>
                 <td class="${fontColor}">${stats['defense'] || 0}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="base-stats-table-row">
                 <th>S-ATK:</th>
                 <td class="${fontColor}">${stats['special-attack'] || 0}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="base-stats-table-row">
                 <th>S-DEF:</th>
                 <td class="${fontColor}">${stats['special-defense'] || 0}</td>
             </tr>
-            <tr class="table-row">
+            <tr class="base-stats-table-row">
                 <th>SPEED:</th>
                 <td class="${fontColor}">${stats['speed'] || 0}</td>
             </tr>
