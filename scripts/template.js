@@ -107,6 +107,14 @@ function getPokemonStatsTemplate(pokemon, fontColor) {
         </table> 
     `;
 }
+
+function getEvoChainTemplate() {
+    return `
+        <div></div>
+
+
+    ` 
+}
 //About
 // base stats
 // evo chain
