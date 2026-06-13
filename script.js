@@ -259,7 +259,7 @@ function renderEvoParts(evolutions, fontColor) {
     for (let i = 0; i < evolutions.length; i++) {
         parts.push(getSingleEvoTemplate(evolutions[i], fontColor));
         if (i < evolutions.length - 1) {
-            parts.push(`<div class="evo-arrow">▼</div>`);
+            parts.push(`<div class="evo-arrow ${fontColor}">▼</div>`);
         }
     }
     return parts;
