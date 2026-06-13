@@ -16,7 +16,7 @@ function getPokemonInformationTemplate(pokemon, mainType) { // card
 
 // dialog
 function getPokemonDialogTemplate(pokemon, fontColor) {
-    
+
     return `
         <div class="dialog-container" onclick="event.stopPropagation()">
             <div class="dialog-image-container pokemon-background-color">
@@ -108,13 +108,23 @@ function getPokemonStatsTemplate(pokemon, fontColor) {
     `;
 }
 
-function getEvoChainTemplate() {
-    return `
-        <div></div>
-
-
-    ` 
+function getEvoChainTemplate(innerHtml) {
+    return `<div class="evo-chain-container">${innerHtml}</div>`;
 }
+
+function getSingleEvoTemplate(evo, fontColor) {
+    return `
+        <div class="evo-stage">
+            <img class="evo-img" src="${IMG_URL}${evo.id}.png" alt="${evo.name}">
+            <p class="evo-name ${fontColor}">${evo.name.charAt(0).toUpperCase() + evo.name.slice(1)}</p>
+        </div>
+    `;
+}
+
+
+
+
+
 //About
 // base stats
 // evo chain

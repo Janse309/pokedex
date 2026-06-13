@@ -120,4 +120,22 @@ table {
     font-weight: bold;
 }
 
+.evo-chain-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+}
+
+.evo-stage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75px;
+}
+
+.evo-img{
+    height: 60px;
+}
 

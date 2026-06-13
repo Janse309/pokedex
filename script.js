@@ -1,27 +1,35 @@
-let BASE_URL = "https://pokeapi.co/api/v2/";
-// let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
-let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
-let IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
-let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+// ==========================================
+// 1. GLOBALE VARIABLEN & CONFIG
+// ==========================================
+const BASE_URL = "https://pokeapi.co/api/v2/";
+const SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
+const IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
+// const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
+const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
 
 let allPokemon = [];
 let currentPokemon = [];
+let currentPokemonIndex = 0; // Ergänzt, da sie im Code genutzt wird
+
 let OFFSET = 0;
-let LIMIT = 25;
+const LIMIT = 25; // Als Konstante definiert, da sich das Limit selten im Lauf ändert
 
 let activePokemonInformation = "main";
 let about = {};
 let baseStats = {};
 
+// ==========================================
+// 2. INITIALISIERUNG & API-FETCHES
+// ==========================================
 async function init() {
     await loadPokemon();
     currentPokemon = allPokemon;
 }
 
 async function fetchPokemonList() {
-    let pokemonListUrl = `${BASE_URL}pokemon?limit=${LIMIT}&offset=${OFFSET}`; // den ersten Link in der Poke API für Limits
-    let fetchPkmnResponse = await fetch(pokemonListUrl); // pokemon informationen herunter laden
-    return await fetchPkmnResponse.json(); // hier wird es zu json umgewandelt und weitergeleited
+    let pokemonListUrl = `${BASE_URL}pokemon?limit=${LIMIT}&offset=${OFFSET}`;
+    let fetchPkmnResponse = await fetch(pokemonListUrl);
+    return await fetchPkmnResponse.json();
 }
 
 async function loadPokemonDetails(pokemonDetailUrl) {
@@ -30,7 +38,6 @@ async function loadPokemonDetails(pokemonDetailUrl) {
 }
 
 async function loadPokemon() {
-
     try {
         let pkmnListData = await fetchPokemonList();
         for (let i = 0; i < pkmnListData.results.length; i++) {
@@ -39,27 +46,26 @@ async function loadPokemon() {
 
         renderAllPokemon();
         OFFSET += LIMIT;
-
     } catch (error) {
-        console.error("Fehler beim laden der Pokemon", error);
+        console.error("Fehler beim Laden der Pokemon", error);
     }
 }
 
 async function fetchFlavorText(pokemonId) {
     let response = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let data = await response.json();
-
     let goldEntry = null;
 
+    // Suche nach speziellem Ruby-Eintrag
     for (let i = 0; i < data.flavor_text_entries.length; i++) {
         let entry = data.flavor_text_entries[i];
         if (entry.language.name === 'en' && entry.version.name === 'ruby') {
             goldEntry = entry;
-            break; // stoppt die Schleife sobald wir den richtigen flavour text gefunden haben
+            break;
         }
     }
 
-    // Falls kein Gold-Eintrag, nimm ersten englischen
+    // Falls kein Ruby-Eintrag, nimm ersten englischen
     if (!goldEntry) {
         for (let i = 0; i < data.flavor_text_entries.length; i++) {
             if (data.flavor_text_entries[i].language.name === 'en') {
@@ -72,37 +78,26 @@ async function fetchFlavorText(pokemonId) {
 }
 
 async function fetchEvolutionChain(pokemonId) {
-    // 1. Species Fetchen! Danach erst die Evo!
-    let responseSpecies = await fetch(`${SPECIES_URL}${pokemonId}/`); // den ersten Link in der Poke API für Limits
+    let responseSpecies = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let speciesData = await responseSpecies.json();
 
-    // Schritt 2: Chain-ID aus der URL extrahieren
     let evoChainUrl = speciesData.evolution_chain.url;
-
-    // schritt 3 evo fetchen
     let evoResponse = await fetch(evoChainUrl);
     let evoData = await evoResponse.json();
-    return evoData.chain // am Ende immer returnen (das was man rausgeben will)
+
+    return evoData.chain;
 }
 
-async function renderEvonChain(pokemon) {
-    let container = document.getElementById('switch-case-section');
-    let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-
-    container.innerHTML = `<p class="${fontColor}">Evolutionskette lädt...</p>`;
-
-    let chain = await fetchEvolutionChain(pokemon.id); // das jeweilige pokemon laden (wenn ich das richtig verstehe)
-}
-
+// ==========================================
+// 3. RENDERING (HAUPTANSICHT)
+// ==========================================
 function renderAllPokemon() {
     let pokemonContainer = document.getElementById('pokedex-gallery');
-
     let htmlContent = "";
+
     for (let index = 0; index < allPokemon.length; index++) {
         let pokemon = allPokemon[index];
-        let mainType = pokemon.types[0].type.name; // Hier holen wir den Typen-Namen (z.B. "grass")
-        let pokemonBgClass = "bg_" + mainType;
+        let mainType = pokemon.types[0].type.name;
         htmlContent += getPokemonInformationTemplate(pokemon, mainType);
     }
     pokemonContainer.innerHTML = htmlContent;
@@ -119,22 +114,23 @@ function renderTypes(pokemon) {
 
         typeText += `<img class="type-icon" src="${ICON_URL}${typeId}.png" alt="${typeName}">`;
     }
-
     return typeText;
 }
 
+// ==========================================
+// 4. DIALOG LOGIK (ÖFFNEN / SCHLIESSEN / NAVI)
+// ==========================================
 function openDialog(id) {
     let dialog = document.getElementById('pokemon-dialog');
-    // Index im aktuellen Array finden und global speichern
+
     currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
     activePokemonInformation = 'main';
 
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
- 
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
 
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
     dialog.setAttribute('data-type', mainType);
 
     getMainPokemonInformation(pokemon);
@@ -153,14 +149,8 @@ function outsideClick(event) {
     }
 }
 
-function outsideClick() {
-    document.getElementById('pokemon-dialog').close();
-}
-
 function nextPokemon() {
-    currentPokemonIndex++; // Index um 1 erhöhen
-
-    // Wenn wir am Ende sind, springe zum Anfang (0)
+    currentPokemonIndex++;
     if (currentPokemonIndex >= currentPokemon.length) {
         currentPokemonIndex = 0;
     }
@@ -168,9 +158,7 @@ function nextPokemon() {
 }
 
 function prevPokemon() {
-    currentPokemonIndex--; // Index um 1 verringern
-
-    // Wenn wir am Anfang sind, springe zum Ende
+    currentPokemonIndex--;
     if (currentPokemonIndex < 0) {
         currentPokemonIndex = currentPokemon.length - 1;
     }
@@ -188,36 +176,32 @@ function updateDialog() {
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
     dialog.setAttribute('data-type', mainType);
 
-    // Dialog-Inhalt mit den neuen Pokémon-Daten austauschen
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
 }
 
-// dialog functions (der inhalt der einzelnen cases);
-
+// ==========================================
+// 5. DIALOG REITER (TABS) & DETAILS
+// ==========================================
 function changeTab(tabName) {
     activePokemonInformation = tabName;
     renderDetailInfo();
-    updateButtonStyles(); // Optionale Funktion, um den aktiven Button zu markieren
+    updateButtonStyles();
 }
 
 async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
-    let pokemon = currentPokemon[currentPokemonIndex]; // Das aktuell offene Pokémon
+    let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
 
     switch (activePokemonInformation) {
         case "main":
-            // Hier nutzen wir deine bestehende Funktion für die "About"-Infos
             await getMainPokemonInformation(pokemon);
             break;
-
         case "base-stats":
-            // Hier übergeben wir die echten Stats an dein Stats-Template
             container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
             break;
-
         case "evo-chain":
             await renderEvonChain(pokemon);
             break;
@@ -233,24 +217,63 @@ async function getMainPokemonInformation(pokemon) {
             abilitiesList += ", ";
         }
     }
+
     let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
     let heightM = (pokemon.height * 10).toFixed() + "cm";
     let flavorText = await fetchFlavorText(pokemon.id);
     let aboutContainer = document.getElementById('switch-case-section');
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
+
     aboutContainer.innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
+}
+
+function collectEvolutions(chain, evolutions) {
+    let urlParts = chain.species.url.split('/');
+    let speciesId = urlParts[urlParts.length - 2];
+
+    evolutions.push({ name: chain.species.name, id: speciesId });
+
+    if (chain.evolves_to.length > 0) {
+        collectEvolutions(chain.evolves_to[0], evolutions);
+    }
+}
+
+async function renderEvonChain(pokemon) {
+    let container = document.getElementById('switch-case-section');
+    let mainType = pokemon.types[0].type.name;
+    let fontColor = "color-" + mainType;
+
+    container.innerHTML = `<p class="${fontColor}">Evolutionskette lädt...</p>`;
+
+    let chain = await fetchEvolutionChain(pokemon.id);
+    let evolutions = [];
+    collectEvolutions(chain, evolutions);
+
+    let parts = renderEvoParts(evolutions, fontColor);
+    container.innerHTML = getEvoChainTemplate(parts.join(''));
+}
+
+function renderEvoParts(evolutions, fontColor) {
+    let parts = [];
+    for (let i = 0; i < evolutions.length; i++) {
+        parts.push(getSingleEvoTemplate(evolutions[i], fontColor));
+        if (i < evolutions.length - 1) {
+            parts.push(`<div class="evo-arrow">▼</div>`);
+        }
+    }
+    return parts;
 }
 
 function updateButtonStyles() {
     let aboutBtn = document.getElementById('about-btn');
     let statsBtn = document.getElementById('base-stats-btn');
     let evoBtn = document.getElementById('evo-chain-btn');
-    // 1. Entferne die aktive Klasse von allen Buttons
+
     aboutBtn.classList.remove('active');
     statsBtn.classList.remove('active');
     evoBtn.classList.remove('active');
-    // 2. Füge 'active' nur dem aktuellen Button hinzu
+
     if (activePokemonInformation === 'main') {
         aboutBtn.classList.add('active');
     } else if (activePokemonInformation === 'base-stats') {
@@ -260,23 +283,21 @@ function updateButtonStyles() {
     }
 }
 
-
+// ==========================================
+// 6. AUSKOMMENTIERTER / ALTER CODE
+// ==========================================
 // async function fetchPokemon(id) {
-
 //     try {
 //         let response = await fetch(`${BASE_URL}pokemon/${id}`);
 //         let pokeResponse = await response.json();
-
 //         renderSinglePokemon(pokeResponse);
-
 //     } catch (error) {
 //         console.error("Fehler beim laden der Daten", error);
 //     }
 // }
-
+//
 // function renderSinglePokemon(pokeResponse) {
 //     let pokemonContentContainer = document.getElementById('pokedex-gallery');
-
 //     let mainType = pokeResponse.types[0].type.name;
 //     let pokemonBgClass = "bg_" + mainType;
 //     pokemonContentContainer.innerHTML = getPokemonInformationTemplate(pokeResponse, pokemonBgClass);
