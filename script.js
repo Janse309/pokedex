@@ -2,7 +2,7 @@ let BASE_URL = "https://pokeapi.co/api/v2/";
 // let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
 let ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
 let IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
-let FLAVOUR_TEXT = "https://pokeapi.co/api/v2/pokemon-species/";
+let SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 
 let allPokemon = [];
 let currentPokemon = [];
@@ -21,7 +21,7 @@ async function init() {
 async function fetchPokemonList() {
     let pokemonListUrl = `${BASE_URL}pokemon?limit=${LIMIT}&offset=${OFFSET}`; // den ersten Link in der Poke API für Limits
     let fetchPkmnResponse = await fetch(pokemonListUrl); // pokemon informationen herunter laden
-    return await fetchPkmnResponse.json(); // hier wird es zu json umgewandelt
+    return await fetchPkmnResponse.json(); // hier wird es zu json umgewandelt und weitergeleited
 }
 
 async function loadPokemonDetails(pokemonDetailUrl) {
@@ -46,7 +46,7 @@ async function loadPokemon() {
 }
 
 async function fetchFlavorText(pokemonId) {
-    let response = await fetch(`${FLAVOUR_TEXT}${pokemonId}/`);
+    let response = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let data = await response.json();
 
     let goldEntry = null;
@@ -70,6 +70,35 @@ async function fetchFlavorText(pokemonId) {
     }
     return goldEntry ? goldEntry.flavor_text.replace(/[\n\f]/g, ' ') : 'No description available.';
 }
+
+async function fetchEvolutionChain(pokemonId) {
+    // 1. Species Fetchen! Danach erst die Evo!
+    let responseSpecies = await fetch(`${SPECIES_URL}${pokemonId}/`); // den ersten Link in der Poke API für Limits
+    let speciesData = await responseSpecies.json();
+
+    // Schritt 2: Chain-ID aus der URL extrahieren
+    let evoChainUrl = speciesData.evolution_chain.url;
+
+    // schritt 3 evo fetchen
+    let evoResponse = await fetch(evoChainUrl);
+    let evoData = await evoResponse.json();
+    return evoData.chain // am Ende immer returnen (das was man rausgeben will)
+}
+
+async function renderEvonChain(pokemon) {
+    let container = document.getElementById('switch-case-section');
+    let mainType = pokemon.types[0].type.name;
+    let fontColor = "color-" + mainType;
+
+    container.innerHTML = `<p class="${fontColor}">Evolutionskette lädt...</p>`;
+    
+    let chain = await fetchEvolutionChain(pokemon.id); // das jeweilige pokemon laden (wenn ich das richtig verstehe)
+}
+
+
+
+console.log(allPokemon);
+
 
 function renderAllPokemon() {
     let pokemonContainer = document.getElementById('pokedex-gallery');
@@ -192,7 +221,7 @@ async function renderDetailInfo() {
             break;
 
         case "evo-chain":
-            container.innerHTML = `<p class="${fontColor}">Evolutionskette folgt...</p>`;
+            await renderEvonChain(pokemon);
             break;
     }
 }
@@ -201,7 +230,7 @@ async function getMainPokemonInformation(pokemon) {
     let abilitiesList = "";
     for (let i = 0; i < pokemon.abilities.length; i++) {
         let abilityName = pokemon.abilities[i].ability.name;
-        abilitiesList += abilityName + abilityName;
+        abilitiesList += abilityName;
         if (i < pokemon.abilities.length - 1) {
             abilitiesList += ", ";
         }
@@ -230,6 +259,10 @@ function updateButtonStyles() {
         document.getElementById('evo-chain-btn').classList.add('active');
     }
 }
+
+
+
+
 
 
 // async function fetchPokemon(id) {
