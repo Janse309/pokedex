@@ -70,10 +70,6 @@
     background-color: transparent;
 }
 
-.dialog-button:hover{
-    border-bottom: 2px solid #DC0A2D;
-}
-
 table {
     padding: 0 16px 0 16px;
 }
@@ -124,7 +120,4 @@ table {
     font-weight: bold;
 }
 
-.active{
-    border-bottom: 2px solid #DC0A2D;
-}
 

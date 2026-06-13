@@ -1,12 +1,12 @@
-function getPokemonInformationTemplate(pokemon, pokemonBgClass) { // card
+function getPokemonInformationTemplate(pokemon, mainType) { // card
     let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
     return `   
-        <div class="pokemon-card">
+        <div class="pokemon-card"">
             <div class="pokemon-card-header">
                 <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
                 <p>#${pokemon.id}</p>
             </div>
-            <div class="pokemon-card-image ${pokemonBgClass}">
+            <div id="card-image-background" class="pokemon-card-image pokemon-background-color" data-type="${mainType}">
                 <button data-id="card" onclick="openDialog(${pokemon.id})" class="pokemon-img-button"><img data-id="card-image" class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
@@ -15,11 +15,11 @@ function getPokemonInformationTemplate(pokemon, pokemonBgClass) { // card
 }
 
 // dialog
-function getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor) {
+function getPokemonDialogTemplate(pokemon, fontColor) {
     
     return `
         <div class="dialog-container" onclick="event.stopPropagation()">
-            <div class="dialog-image-container ${pokemonBgClass}">
+            <div class="dialog-image-container pokemon-background-color">
                 <div class="dialog-header">
                     <span>#${pokemon.id}</span>
                     <h2 class="pokemon-name">${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>

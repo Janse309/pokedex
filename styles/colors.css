@@ -1,147 +1,128 @@
-.bg_normal {
-    /*id 1*/
-    background-color: #AAA67F;
-}
-
 .color-normal {
     color: #AAA67F;
-}
-
-.bg_fighting {
-    /*id 2*/
-    background-color: #C12239;
 }
 
 .color-fighting {
     color: #C12239;
 }
 
-.bg_flying {
-    /*id 3*/
-    background-color: #A891EC;
-}
-
 .color-flying {
     color: #A891EC;
-}
-
-.bg_poison {
-    /*id 4*/
-    background-color: #c02cb6;
 }
 
 .color-poison {
     color: #c02cb6;
 }
 
-.bg_ground {
-    background-color: #DEC16B;
-}
-
 .color-ground {
     color: #DEC16B;
-}
-
-.bg_rock {
-    background-color: #B69E31;
 }
 
 .color-rock {
     color: #B69E31;
 }
 
-.bg_bug {
-    background-color: #A7B723;
-}
-
 .color-bug {
     color: #A7B723;
-}
-
-.bg_ghost {
-    background-color: #70559B;
 }
 
 .color-ghost {
     color: #70559B;
 }
 
-.bg_steel {
-    background-color: #B7B9D0;
-}
-
 .color-steel {
     color: #B7B9D0;
-}
-
-.bg_fire {
-    background-color: #F57D31;
 }
 
 .color-fire {
     color: #F57D31;
 }
 
-.bg_water {
-    background-color: #6493EB;
-}
-
 .color-water {
     color: #6493EB;
-}
-
-.bg_grass {
-    background-color: #74CB48;
 }
 
 .color-grass {
     color: #74CB48;
 }
 
-.bg_electric {
-    background-color: #F9CF30;
-}
-
 .color-electric {
     color: #F9CF30;
-}
-
-.bg_psychic {
-    background-color: #FB5584;
 }
 
 .color-psychic {
     color: #FB5584;
 }
 
-.bg_ice {
-    background-color: #9AD6DF;
-}
-
 .color-ice {
     color: #9AD6DF;
-}
-
-.bg_dragon {
-    background-color: #7037FF;
 }
 
 .color-dragon {
     color: #7037FF;
 }
 
-.bg_dark {
-    background-color: #75574C;
-}
-
 .color-dark {
     color: #75574C;
 }
 
-.bg_fairy {
-    background-color: #E69EAC;
-}
-
 .color-fairy {
     color: #E69EAC;
+}
+
+.pokemon-card-image[data-type="normal"] { --type-color: #AAA67F; }
+.pokemon-card-image[data-type="fighting"] { --type-color: #C12239; }
+.pokemon-card-image[data-type="flying"] { --type-color: #A891EC; }
+.pokemon-card-image[data-type="poison"] { --type-color: #c02cb6; }
+.pokemon-card-image[data-type="ground"] { --type-color: #DEC16B; }
+.pokemon-card-image[data-type="rock"] { --type-color: #B69E31; }
+.pokemon-card-image[data-type="bug"] { --type-color: #A7B723; }
+.pokemon-card-image[data-type="ghost"] { --type-color: #70559B; }
+.pokemon-card-image[data-type="steel"] { --type-color: #B7B9D0; }
+.pokemon-card-image[data-type="fire"] { --type-color: #F57D31; }
+.pokemon-card-image[data-type="water"] { --type-color: #6493EB; }
+.pokemon-card-image[data-type="grass"] { --type-color: #74CB48; }
+.pokemon-card-image[data-type="electric"] { --type-color: #F9CF30; }
+.pokemon-card-image[data-type="psychic"] { --type-color: #FB5584; }
+.pokemon-card-image[data-type="ice"] { --type-color: #9AD6DF; }
+.pokemon-card-image[data-type="dragon"] { --type-color: #7037FF; }
+.pokemon-card-image[data-type="dark"] { --type-color: #75574C; }
+.pokemon-card-image[data-type="fairy"] { --type-color: #E69EAC; }
+
+.pokemon-background-color{
+    background-color: var(--type-color) !important;
+}
+
+.pokemon-dialog[data-type="normal"] { --type-color: #AAA67F; }
+.pokemon-dialog[data-type="fighting"] { --type-color: #C12239; }
+.pokemon-dialog[data-type="flying"] { --type-color: #A891EC; }
+.pokemon-dialog[data-type="poison"] { --type-color: #c02cb6; }
+.pokemon-dialog[data-type="ground"] { --type-color: #DEC16B; }
+.pokemon-dialog[data-type="rock"] { --type-color: #B69E31; }
+.pokemon-dialog[data-type="bug"] { --type-color: #A7B723; }
+.pokemon-dialog[data-type="ghost"] { --type-color: #70559B; }
+.pokemon-dialog[data-type="steel"] { --type-color: #B7B9D0; }
+.pokemon-dialog[data-type="fire"] { --type-color: #F57D31; }
+.pokemon-dialog[data-type="water"] { --type-color: #6493EB; }
+.pokemon-dialog[data-type="grass"] { --type-color: #74CB48; }
+.pokemon-dialog[data-type="electric"] { --type-color: #F9CF30; }
+.pokemon-dialog[data-type="psychic"] { --type-color: #FB5584; }
+.pokemon-dialog[data-type="ice"] { --type-color: #9AD6DF; }
+.pokemon-dialog[data-type="dragon"] { --type-color: #7037FF; }
+.pokemon-dialog[data-type="dark"] { --type-color: #75574C; }
+.pokemon-dialog[data-type="fairy"] { --type-color: #E69EAC; }
+
+.pokemon-dialog button {
+    border-bottom: 2px solid transparent; /* Unsichtbarer Rand, damit die Buttons nicht springen */
+    transition: border-color 0.2s ease-in-out; /* Macht den Übergang schön geschmeidig */
+}
+
+/* HOVER-EFFEKT: Wenn man mit der Maus drüber fährt, färbt sich der Rand in der Typ-Farbe */
+.pokemon-dialog button:hover {
+    border-bottom: 2px solid var(--type-color) !important;
+}
+
+/* AKTIVER ZUSTAND: Der aktive Button hat die Farbe dauerhaft */
+.pokemon-dialog button.active {
+    border-bottom: 2px solid var(--type-color) !important;
 }

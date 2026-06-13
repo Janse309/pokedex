@@ -91,14 +91,9 @@ async function renderEvonChain(pokemon) {
     let fontColor = "color-" + mainType;
 
     container.innerHTML = `<p class="${fontColor}">Evolutionskette lädt...</p>`;
-    
+
     let chain = await fetchEvolutionChain(pokemon.id); // das jeweilige pokemon laden (wenn ich das richtig verstehe)
 }
-
-
-
-console.log(allPokemon);
-
 
 function renderAllPokemon() {
     let pokemonContainer = document.getElementById('pokedex-gallery');
@@ -106,9 +101,9 @@ function renderAllPokemon() {
     let htmlContent = "";
     for (let index = 0; index < allPokemon.length; index++) {
         let pokemon = allPokemon[index];
-        let mainType = pokemon.types[0].type.name;
+        let mainType = pokemon.types[0].type.name; // Hier holen wir den Typen-Namen (z.B. "grass")
         let pokemonBgClass = "bg_" + mainType;
-        htmlContent += getPokemonInformationTemplate(pokemon, pokemonBgClass);
+        htmlContent += getPokemonInformationTemplate(pokemon, mainType);
     }
     pokemonContainer.innerHTML = htmlContent;
 }
@@ -136,10 +131,12 @@ function openDialog(id) {
 
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
-    let pokemonBgClass = "bg_" + mainType;
     let fontColor = "color-" + mainType;
+ 
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
 
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
+    dialog.setAttribute('data-type', mainType);
+
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
     dialog.showModal();
@@ -186,11 +183,12 @@ function updateDialog() {
     activePokemonInformation = 'main';
 
     let mainType = pokemon.types[0].type.name;
-    let pokemonBgClass = "bg_" + mainType;
     let fontColor = "color-" + mainType;
 
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
+    dialog.setAttribute('data-type', mainType);
+
     // Dialog-Inhalt mit den neuen Pokémon-Daten austauschen
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, pokemonBgClass, fontColor);
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
 }
@@ -245,24 +243,22 @@ async function getMainPokemonInformation(pokemon) {
 }
 
 function updateButtonStyles() {
-    // Entferne die aktive Klasse von allen Buttons
-    document.getElementById('about-btn').classList.remove('active');
-    document.getElementById('base-stats-btn').classList.remove('active');
-    document.getElementById('evo-chain-btn').classList.remove('active');
-
-    // Füge sie dem aktuell aktiven Button hinzu
+    let aboutBtn = document.getElementById('about-btn');
+    let statsBtn = document.getElementById('base-stats-btn');
+    let evoBtn = document.getElementById('evo-chain-btn');
+    // 1. Entferne die aktive Klasse von allen Buttons
+    aboutBtn.classList.remove('active');
+    statsBtn.classList.remove('active');
+    evoBtn.classList.remove('active');
+    // 2. Füge 'active' nur dem aktuellen Button hinzu
     if (activePokemonInformation === 'main') {
-        document.getElementById('about-btn').classList.add('active');
+        aboutBtn.classList.add('active');
     } else if (activePokemonInformation === 'base-stats') {
-        document.getElementById('base-stats-btn').classList.add('active');
+        statsBtn.classList.add('active');
     } else if (activePokemonInformation === 'evo-chain') {
-        document.getElementById('evo-chain-btn').classList.add('active');
+        evoBtn.classList.add('active');
     }
 }
-
-
-
-
 
 
 // async function fetchPokemon(id) {
