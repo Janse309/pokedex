@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mein Pokedex</title>
+
     <link rel="stylesheet" href="./style.css">
     <link rel="stylesheet" href="./styles/standart.css">
     <link rel="stylesheet" href="./styles/colors.css">
@@ -14,9 +15,10 @@
     <link rel="stylesheet" href="./styles/dialog.css">
     <link rel="stylesheet" href="./styles/variable.css">
 
-    <script src="./scripts/template.js"></script>
-    <script src="./scripts/search.js"></script>
-    <script src="./script.js"></script>
+    <script src="./scripts/template.js" defer></script>
+    <script src="./scripts/search.js" defer></script>
+    <script src="./script.js" defer></script>
+
     <link rel="icon" type="image/x-icon" href="./assets/icon/fav-icon-zeiger.png">
 </head>
 
@@ -24,14 +26,14 @@
 
     <header class="pokedex-header">
         <section class="pokedex-header-content content-wrapper">
-            <div>
+            <div class="headline-section">
                 <h1 class="page-headline">Pokedex</h1>
                 <p class="page-headline-text">catch them all</p>
             </div>
             <div class="search-section">
                 <input data-id="search-input" id="search-input-field" class="search-input" type="text"
                     placeholder="pokémon name or ID">
-                <button data-id=”search-button” class="search-btn"><img src="./assets/icon/Vector.svg"
+                <button data-id="search-button" id="search-icon" class="search-btn"><img src="./assets/icon/Vector.svg"
                         alt="search"></button>
             </div>
         </section>

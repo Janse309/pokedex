@@ -8,6 +8,11 @@
     background-color: #DC0A2D;
     display: flex;
 }
+.headline-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 .pokedex-header-content {
     display: flex;

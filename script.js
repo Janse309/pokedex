@@ -282,23 +282,3 @@ function updateButtonStyles() {
         evoBtn.classList.add('active');
     }
 }
-
-// ==========================================
-// 6. AUSKOMMENTIERTER / ALTER CODE
-// ==========================================
-// async function fetchPokemon(id) {
-//     try {
-//         let response = await fetch(`${BASE_URL}pokemon/${id}`);
-//         let pokeResponse = await response.json();
-//         renderSinglePokemon(pokeResponse);
-//     } catch (error) {
-//         console.error("Fehler beim laden der Daten", error);
-//     }
-// }
-//
-// function renderSinglePokemon(pokeResponse) {
-//     let pokemonContentContainer = document.getElementById('pokedex-gallery');
-//     let mainType = pokeResponse.types[0].type.name;
-//     let pokemonBgClass = "bg_" + mainType;
-//     pokemonContentContainer.innerHTML = getPokemonInformationTemplate(pokeResponse, pokemonBgClass);
-// }
