@@ -1,7 +1,7 @@
 .pokemon-card {
     margin-top: 24px;
     font-family: 'Poppins', sans-serif;
-    width: 250px;
+    width: 275px;
 }
 
 .pokemon-card:hover .pkmn-img {

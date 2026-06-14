@@ -58,10 +58,7 @@
     flex-wrap: wrap;
     padding: 0 var(--content-padding);
     justify-content: center;
-
-    gap: 8px;
-
-
+    gap: 16px;
 }
 
 @media(max-width: 500px) {
