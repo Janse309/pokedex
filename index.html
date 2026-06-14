@@ -41,12 +41,16 @@
 
 
     <main data-id="content">
+<!-- 
+        <div id="#LoadingSpinner" class="loading-spinner-container d-none">
+            <img class="loading-spinner" src="./assets/icon/pokeball.png" alt="pokeball">
+        </div> -->
 
         <section class="content-wrapper">
             <div class="pokemon-main-content" id="pokedex-gallery"></div>
 
-            <div class="center-button">
-                <button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>
+            <div class="center-button" id="load-more-pokemon">
+
             </div>
 
             <dialog data-id="dialog" class="pokemon-dialog" id="pokemon-dialog" onclick="outsideClick(event)"></dialog>
@@ -54,8 +58,15 @@
 
     </main>
 
-    <footer><a target="_blank" href="https://icons8.com/icon/1X9wUcuHxlS2/pokemon-pointer">Zeiger</a> icon by <a
-            target="_blank" href="https://icons8.com">Icons8</a></footer>
+    <footer class="pokedex-footer">
+        <section class="footer-text content-wrapper">
+            <a target="_blank" href="https://icons8.com/icon/1X9wUcuHxlS2/pokemon-pointer">Zeiger</a>
+            icon by
+            <a target="_blank" href="https://icons8.com">Icons8</a>
+        </section>
+
+
+    </footer>
 
 </body>
 

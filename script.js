@@ -7,6 +7,9 @@ const IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprite
 // const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/legends-arceus/";
 const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
 
+const spinnerOverlay = document.createElement('div');
+spinnerOverlay.id = 'global-spinner';
+
 let allPokemon = [];
 let currentPokemon = [];
 let currentPokemonIndex = 0; // Ergänzt, da sie im Code genutzt wird
@@ -38,17 +41,24 @@ async function loadPokemonDetails(pokemonDetailUrl) {
 }
 
 async function loadPokemon() {
+    showFullscreenSpinner();
     try {
         let pkmnListData = await fetchPokemonList();
         for (let i = 0; i < pkmnListData.results.length; i++) {
             allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
         }
-
         renderAllPokemon();
+        hideFullscreenSpinner();
         OFFSET += LIMIT;
     } catch (error) {
         console.error("Fehler beim Laden der Pokemon", error);
     }
+    loadmorePkmn();
+}
+
+function loadmorePkmn() {
+    let loadingPokemonButton = document.getElementById('load-more-pokemon');
+    loadingPokemonButton.innerHTML = '<button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>';
 }
 
 async function fetchFlavorText(pokemonId) {
@@ -64,7 +74,6 @@ async function fetchFlavorText(pokemonId) {
             break;
         }
     }
-
     // Falls kein Ruby-Eintrag, nimm ersten englischen
     if (!goldEntry) {
         for (let i = 0; i < data.flavor_text_entries.length; i++) {
@@ -190,6 +199,7 @@ function changeTab(tabName) {
 }
 
 async function renderDetailInfo() {
+
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
@@ -203,7 +213,7 @@ async function renderDetailInfo() {
             container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
             break;
         case "evo-chain":
-            await renderEvonChain(pokemon);
+            await renderEvoChain(pokemon);
             break;
     }
 }
@@ -226,6 +236,7 @@ async function getMainPokemonInformation(pokemon) {
     let fontColor = "color-" + mainType;
 
     aboutContainer.innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
+
 }
 
 function collectEvolutions(chain, evolutions) {
@@ -239,19 +250,20 @@ function collectEvolutions(chain, evolutions) {
     }
 }
 
-async function renderEvonChain(pokemon) {
-    let container = document.getElementById('switch-case-section');
-    let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-
-    container.innerHTML = `<p class="${fontColor}">Evolutionskette lädt...</p>`;
-
+async function renderEvoChain(pokemon) {
+    const evoId = 'switch-case-section';
+    showContainerSpinner(evoId);
+    
     let chain = await fetchEvolutionChain(pokemon.id);
     let evolutions = [];
     collectEvolutions(chain, evolutions);
-
+    hideContainerSpinner(evoId);
+    let mainType = pokemon.types[0].type.name;
+    let fontColor = "color-" + mainType;
     let parts = renderEvoParts(evolutions, fontColor);
+    let container = document.getElementById(evoId);
     container.innerHTML = getEvoChainTemplate(parts.join(''));
+    
 }
 
 function renderEvoParts(evolutions, fontColor) {
@@ -280,5 +292,37 @@ function updateButtonStyles() {
         statsBtn.classList.add('active');
     } else if (activePokemonInformation === 'evo-chain') {
         evoBtn.classList.add('active');
+    }
+}
+
+function showContainerSpinner(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = loadingSpinnerTemplate('loading-spinner-container-evo');
+    }
+}
+
+function hideContainerSpinner(containerId) {
+    const container = document.getElementById(containerId);
+    if (container) {
+        container.innerHTML = ""; // Leert den Container wieder
+    }
+}
+
+function showFullscreenSpinner() {
+    if (document.querySelector('.loading-spinner-container')) return;
+
+    const tempDiv = document.createElement('div');
+    // Wir übergeben dem Template die Klasse für das Vollbild-Overlay
+    tempDiv.innerHTML = loadingSpinnerTemplate('loading-spinner-container');
+
+    const spinnerElement = tempDiv.firstElementChild;
+    document.body.appendChild(spinnerElement);
+}
+
+function hideFullscreenSpinner() {
+    const spinner = document.querySelector('.loading-spinner-container');
+    if (spinner) {
+        spinner.remove(); // Löscht den Vollbild-Spinner wieder komplett
     }
 }
