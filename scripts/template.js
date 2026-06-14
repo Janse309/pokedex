@@ -1,7 +1,7 @@
 function getPokemonInformationTemplate(pokemon, mainType) { // card
     let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
     return `   
-        <section class="pokemon-card"">
+        <section class="pokemon-card">
             <div class="pokemon-card-header">
                 <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
                 <p>#${pokemon.id}</p>
@@ -29,7 +29,7 @@ function getPokemonDialogTemplate(pokemon, fontColor) {
                     </button>
                 </header>
 
-                <div>
+                <div class="mobile-button-and-image-container">
                     <button data-id="prev-button" class="control-btn" onclick="prevPokemon(${currentPokemonIndex})">
                         <img src="./assets/icon/left.svg" alt="prev">
                     </button>
@@ -70,7 +70,7 @@ function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColo
         <table>
             <tr class="flavour-text-container">
                 <th class="pokemon-description">Description:</th>
-                <td class="${fontColor}">${flavorText}</td>
+                <td class="${fontColor} flavour-text-size-mobile">${flavorText}</td>
             </tr>
             <tr class="about-table-row">
                 <th>Weight:</th>

@@ -1,3 +1,7 @@
+dialog::backdrop {
+    background-color: rgba(59, 57, 57, 0.4);
+}
+
 .pokemon-dialog {
     height: 640px;
     width: 360px;
@@ -101,7 +105,7 @@ table {
     margin-bottom: 8px;
 }
 
-.base-stats-table{
+.base-stats-table {
     margin-top: 8px;
 }
 
@@ -120,7 +124,7 @@ table {
     font-weight: bold;
 }
 
-.evo-chain-container{
+.evo-chain-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -128,7 +132,7 @@ table {
     width: 200px;
 }
 
-.evo-stage{
+.evo-stage {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -136,6 +140,44 @@ table {
     margin: 6px 0 6px 0;
 }
 
-.evo-img{
+.evo-img {
     height: 60px;
+}
+
+@media(max-width: 560px) {
+
+    * {
+        padding: 0;
+    }
+
+    .pokemon-dialog {
+        width: 300px;
+        height: 550px;
+    }
+
+    .mobile-button-and-image-container {
+        display: flex;
+    }
+
+    .control-btn {
+        padding-block: 0;
+        padding-inline: 0;
+    }
+
+    .type-icon {
+        width: 100px;
+    }
+
+    .pokemon-name {
+        font-size: 20px;
+    }
+
+    .dialog-img {
+        width: 180px;
+        height: 180px;
+    }
+
+    .flavour-text-size-mobile {
+        font-size: 14px;
+    }
 }
