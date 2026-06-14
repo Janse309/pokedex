@@ -133,13 +133,9 @@ table {
     flex-direction: column;
     align-items: center;
     height: 75px;
+    margin: 6px 0 6px 0;
 }
 
 .evo-img{
     height: 60px;
 }
-
-.evo-arrow{
-    /* color: #6493EB; */
-}
-

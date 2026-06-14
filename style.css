@@ -58,3 +58,9 @@
     grid-template-columns: repeat(5, 1fr);
     gap: 8px;
 }
+
+@media(max-width: 1440px) {
+    .pokemon-main-content {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
