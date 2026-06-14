@@ -1,6 +1,7 @@
 .pokemon-card {
     margin-top: 24px;
     font-family: 'Poppins', sans-serif;
+    width: 250px;
 }
 
 .pokemon-card:hover .pkmn-img {
@@ -60,10 +61,10 @@
     border-radius: 0 0 24px 24px;
 }
 
-@media(max-width: 1440px) {
+/* @media(max-width: 1800px) {
     .pokemon-card {
-       width: 300px;
+       width: auto;
     }
 
-}
+} */
 

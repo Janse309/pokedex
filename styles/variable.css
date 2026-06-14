@@ -1,0 +1,4 @@
+:root {
+  --content-padding: max(calc(50% - 960px), 48px);
+  --content-padding-small: max(calc(50% - 960px), 24px);
+}
