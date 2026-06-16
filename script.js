@@ -1,6 +1,3 @@
-// ==========================================
-// 1. GLOBALE VARIABLEN & CONFIG
-// ==========================================
 const BASE_URL = "https://pokeapi.co/api/v2/";
 const SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 const IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
@@ -11,10 +8,10 @@ spinnerOverlay.id = 'global-spinner';
 
 let allPokemon = [];
 let currentPokemon = [];
-let currentPokemonIndex = 0; // Ergänzt, da sie im Code genutzt wird
+let currentPokemonIndex = 0; 
 
 let OFFSET = 0;
-const LIMIT = 25; // Als Konstante definiert, da sich das Limit selten im Lauf ändert
+const LIMIT = 25;
 
 let activePokemonInformation = "main";
 let about = {};
@@ -37,7 +34,7 @@ async function loadPokemonDetails(pokemonDetailUrl) {
 
 async function loadPokemon() { // 21 Zeilen
     let loadMoreBtn = document.getElementById("load-more-button");
-    if (loadMoreBtn) loadMoreBtn.disabled = true; 
+    if (loadMoreBtn) loadMoreBtn.disabled = true;
     showFullscreenSpinner();
     try {
         let pkmnListData = await fetchPokemonList();
@@ -50,37 +47,34 @@ async function loadPokemon() { // 21 Zeilen
     } catch (error) {
         console.error("Fehler beim Laden der Pokemon", error);
     }
-    finally{
+    finally {
         hideFullscreenSpinner();
         if (loadMoreBtn) loadMoreBtn.disabled = false;
     }
 }
 
-async function fetchFlavorText(pokemonId) { // 23 Zeilen
+async function fetchFlavorText(pokemonId) {
     let response = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let data = await response.json();
-    let goldEntry = null;
 
-    // Suche nach speziellem Ruby-Eintrag
-    for (let i = 0; i < data.flavor_text_entries.length; i++) {
-        let entry = data.flavor_text_entries[i];
-        if (entry.language.name === 'en' && entry.version.name === 'ruby') {
-            goldEntry = entry;
-            break;
-        }
-    }
-    // Falls kein Ruby-Eintrag, nimm ersten englischen
-    if (!goldEntry) {
-        for (let i = 0; i < data.flavor_text_entries.length; i++) {
-            if (data.flavor_text_entries[i].language.name === 'en') {
-                goldEntry = data.flavor_text_entries[i];
-                break;
-            }
-        }
-    }
-    return goldEntry ? goldEntry.flavor_text.replace(/[\n\f]/g, ' ') : 'No description available.';
+    let entry = findEnglishEntry(data.flavor_text_entries || []);
+
+    return entry ? entry.flavor_text.replace(/[\n\f]/g, ' ') : 'No description available.';
 }
 
+function findEnglishEntry(entries) {
+    for (let i = 0; i < entries.length; i++) {
+        if (entries[i].language.name === 'en' && entries[i].version.name === 'ruby') {
+            return entries[i]; 
+        }
+    }
+    for (let i = 0; i < entries.length; i++) {
+        if (entries[i].language.name === 'en') {
+            return entries[i];
+        }
+    }
+    return null;
+}
 async function fetchEvolutionChain(pokemonId) {
     let responseSpecies = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let speciesData = await responseSpecies.json();
@@ -118,22 +112,18 @@ function renderTypes(pokemon) {
     return typeText;
 }
 
-async function openDialog(id) { // 19 Zeilen
+async function openDialog(id) {
     let dialog = document.getElementById('pokemon-dialog');
+    let pokemon = currentPokemon[currentPokemonIndex];
     currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
     activePokemonInformation = 'main';
-    let pokemon = currentPokemon[currentPokemonIndex];
-
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
-
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
-
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
     dialog.setAttribute('data-type', mainType);
-
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
     dialog.showModal();
@@ -166,18 +156,15 @@ function prevPokemon() {
     updateDialog();
 }
 
-async function updateDialog() { // 17 Zeilen
+async function updateDialog() { 
     let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';
-
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
-
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
-
     dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
     dialog.setAttribute('data-type', mainType);
 
@@ -191,43 +178,35 @@ function changeTab(tabName) {
     updateButtonStyles();
 }
 
-async function renderDetailInfo() { // 18 Zeilen
+async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
 
     switch (activePokemonInformation) {
-        case "main":
-            getMainPokemonInformation(pokemon);
+        case "main": getMainPokemonInformation(pokemon);
             break;
-        case "base-stats":
-            container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
+        case "base-stats": container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
             break;
-        case "evo-chain":
-            await renderEvoChain(pokemon);
+        case "evo-chain": await renderEvoChain(pokemon);
             break;
     }
 }
 
-async function getMainPokemonInformation(pokemon) { // 18 Zeilen
+async function getMainPokemonInformation(pokemon) {
     let abilitiesList = "";
     for (let i = 0; i < pokemon.abilities.length; i++) {
         let abilityName = pokemon.abilities[i].ability.name;
         abilitiesList += abilityName;
-        if (i < pokemon.abilities.length - 1) {
-            abilitiesList += ", ";
-        }
+        if (i < pokemon.abilities.length - 1) { abilitiesList += ", "; }
     }
-    
     let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
     let heightM = (pokemon.height * 10).toFixed() + "cm";
     let flavorText = pokemon.flavorText || 'No description available.';
-    let aboutContainer = document.getElementById('switch-case-section');
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
-
-    aboutContainer.innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
+    document.getElementById('switch-case-section').innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
 }
 
 function collectEvolutions(chain, evolutions) {
@@ -244,7 +223,7 @@ function collectEvolutions(chain, evolutions) {
 async function renderEvoChain(pokemon) {
     const evoId = 'switch-case-section';
     showContainerSpinner(evoId);
-    
+
     let chain = await fetchEvolutionChain(pokemon.id);
     let evolutions = [];
     collectEvolutions(chain, evolutions);
@@ -261,7 +240,7 @@ function renderEvoParts(evolutions, fontColor) {
     for (let i = 0; i < evolutions.length; i++) {
         parts.push(getSingleEvoTemplate(evolutions[i], fontColor));
         if (i < evolutions.length - 1) {
-            parts.push(`<div class="evo-arrow ${fontColor}">>>></div>`);
+            parts.push(`<div id="evo-arrow" class="evo-arrow ${fontColor}"><p class="arrow">>>></p></div>`);
         }
     }
     return parts;
@@ -293,7 +272,7 @@ function showContainerSpinner(containerId) {
 function hideContainerSpinner(containerId) {
     const container = document.getElementById(containerId);
     if (container) {
-        container.innerHTML = ""; // Leert den Container wieder
+        container.innerHTML = "";
     }
 }
 
@@ -301,7 +280,6 @@ function showFullscreenSpinner() {
     if (document.querySelector('.loading-spinner-container')) return;
 
     const tempDiv = document.createElement('div');
-    // Wir übergeben dem Template die Klasse für das Vollbild-Overlay
     tempDiv.innerHTML = loadingSpinnerTemplate('loading-spinner-container');
 
     const spinnerElement = tempDiv.firstElementChild;
@@ -311,7 +289,7 @@ function showFullscreenSpinner() {
 function hideFullscreenSpinner() {
     const spinner = document.querySelector('.loading-spinner-container');
     if (spinner) {
-        spinner.remove(); // Löscht den Vollbild-Spinner wieder komplett
+        spinner.remove();
     }
 }
 

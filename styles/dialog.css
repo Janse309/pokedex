@@ -142,6 +142,12 @@ table {
 
 .evo-arrow{
     margin-top: 56px;
+    
+}
+
+.arrow{
+    font-weight: bold;
+    font-size: 21px;
 }
 
 .evo-img {
@@ -184,8 +190,22 @@ table {
     .flavour-text-size-mobile {
         font-size: 14px;
     }
+}
 
-    .evo-chain-container{
-        flex-direction: row;
+@media(max-width: 350px) {
+        .evo-chain-container{
+        flex-direction: column;
+    }
+
+    .evo-img{
+        height: 50px;
+    }
+
+    .evo-stage{
+        margin-top: 8px;
+    }
+    
+    .evo-arrow{
+        display: none;
     }
 }
