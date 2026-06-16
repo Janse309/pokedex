@@ -20,12 +20,8 @@ let activePokemonInformation = "main";
 let about = {};
 let baseStats = {};
 
-// ==========================================
-// 2. INITIALISIERUNG & API-FETCHES
-// ==========================================
 async function init() {
     await loadPokemon();
-    // currentPokemon = allPokemon;
 }
 
 async function fetchPokemonList() {
@@ -39,7 +35,7 @@ async function loadPokemonDetails(pokemonDetailUrl) {
     return await response.json();
 }
 
-async function loadPokemon() {
+async function loadPokemon() { // 21 Zeilen
     let loadMoreBtn = document.getElementById("load-more-button");
     if (loadMoreBtn) loadMoreBtn.disabled = true; 
     showFullscreenSpinner();
@@ -60,12 +56,7 @@ async function loadPokemon() {
     }
 }
 
-// function loadmorePkmn() {
-//     let loadingPokemonButton = document.getElementById('load-more-pokemon');
-//     loadingPokemonButton.innerHTML = '<button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>';
-// }
-
-async function fetchFlavorText(pokemonId) {
+async function fetchFlavorText(pokemonId) { // 23 Zeilen
     let response = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let data = await response.json();
     let goldEntry = null;
@@ -101,9 +92,6 @@ async function fetchEvolutionChain(pokemonId) {
     return evoData.chain;
 }
 
-// ==========================================
-// 3. RENDERING (HAUPTANSICHT)
-// ==========================================
 function renderAllPokemon() {
     let pokemonContainer = document.getElementById('pokedex-gallery');
     let htmlContent = "";
@@ -130,10 +118,7 @@ function renderTypes(pokemon) {
     return typeText;
 }
 
-// ==========================================
-// 4. DIALOG LOGIK (ÖFFNEN / SCHLIESSEN / NAVI)
-// ==========================================
-async function openDialog(id) {
+async function openDialog(id) { // 19 Zeilen
     let dialog = document.getElementById('pokemon-dialog');
     currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
     activePokemonInformation = 'main';
@@ -181,7 +166,7 @@ function prevPokemon() {
     updateDialog();
 }
 
-async function updateDialog() {
+async function updateDialog() { // 17 Zeilen
     let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';
@@ -200,16 +185,13 @@ async function updateDialog() {
     updateButtonStyles();
 }
 
-// ==========================================
-// 5. DIALOG REITER (TABS) & DETAILS
-// ==========================================
 function changeTab(tabName) {
     activePokemonInformation = tabName;
     renderDetailInfo();
     updateButtonStyles();
 }
 
-async function renderDetailInfo() {
+async function renderDetailInfo() { // 18 Zeilen
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
@@ -228,7 +210,7 @@ async function renderDetailInfo() {
     }
 }
 
-async function getMainPokemonInformation(pokemon) {
+async function getMainPokemonInformation(pokemon) { // 18 Zeilen
     let abilitiesList = "";
     for (let i = 0; i < pokemon.abilities.length; i++) {
         let abilityName = pokemon.abilities[i].ability.name;
@@ -246,7 +228,6 @@ async function getMainPokemonInformation(pokemon) {
     let fontColor = "color-" + mainType;
 
     aboutContainer.innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
-
 }
 
 function collectEvolutions(chain, evolutions) {
@@ -273,7 +254,6 @@ async function renderEvoChain(pokemon) {
     let parts = renderEvoParts(evolutions, fontColor);
     let container = document.getElementById(evoId);
     container.innerHTML = getEvoChainTemplate(parts.join(''));
-    
 }
 
 function renderEvoParts(evolutions, fontColor) {
@@ -291,11 +271,9 @@ function updateButtonStyles() {
     let aboutBtn = document.getElementById('about-btn');
     let statsBtn = document.getElementById('base-stats-btn');
     let evoBtn = document.getElementById('evo-chain-btn');
-
     aboutBtn.classList.remove('active');
     statsBtn.classList.remove('active');
     evoBtn.classList.remove('active');
-
     if (activePokemonInformation === 'main') {
         aboutBtn.classList.add('active');
     } else if (activePokemonInformation === 'base-stats') {

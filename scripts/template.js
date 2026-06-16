@@ -17,7 +17,7 @@ function getPokemonInformationTemplate(pokemon, mainType) { // card
 function getPokemonDialogTemplate(pokemon, fontColor) {
 
     return `
-        <article class="dialog-container" onclick="event.stopPropagation()">
+        <article data-id="overlay-pokemon-name" class="dialog-container" onclick="event.stopPropagation()">
 
             <div class="dialog-image-container pokemon-background-color">
                 <header class="dialog-header">
