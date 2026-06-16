@@ -30,12 +30,14 @@
                 <h1 class="page-headline">Pokedex</h1>
                 <p class="page-headline-text">catch them all</p>
             </div>
-            <div class="search-section">
+
+            <form class="search-section" onsubmit="event.preventDefault();">
                 <input data-id="search-input" id="search-input-field" class="search-input" type="text"
-                    placeholder="pokémon name or ID">
-                <button data-id="search-button" id="search-icon" class="search-btn"><img src="./assets/icon/Vector.svg"
-                        alt="search"></button>
-            </div>
+                    placeholder="pokémon name">
+                <button data-id="search-button" id="search-icon" class="search-btn" type="button">
+                    <img src="./assets/icon/Vector.svg" alt="search">
+                </button>
+            </form>
         </section>
     </header>
 
@@ -46,7 +48,7 @@
             <div class="pokemon-main-content" id="pokedex-gallery"></div>
 
             <div class="center-button" id="load-more-pokemon">
-
+                <button id="load-more-button" class="load-more-button" onclick="loadPokemon()">Load more</button>
             </div>
 
             <dialog data-id="dialog" class="pokemon-dialog" id="pokemon-dialog" onclick="outsideClick(event)"></dialog>

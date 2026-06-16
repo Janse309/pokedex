@@ -14,7 +14,6 @@ function getPokemonInformationTemplate(pokemon, mainType) { // card
     `
 }
 
-// dialog
 function getPokemonDialogTemplate(pokemon, fontColor) {
 
     return `
@@ -52,13 +51,11 @@ function getPokemonDialogTemplate(pokemon, fontColor) {
                     <h3 class="${fontColor}">base stats</h3>
                 </button>
                 <button onclick="changeTab('evo-chain')" id="evo-chain-btn" class="dialog-button">
-                    <h3 class="${fontColor}">evo chain</h3>
+                    <h3 class="${fontColor}">evo-chain</h3>
                 </button>
             </nav>
 
-            <div class="dialog-about-content" id="switch-case-section">
-                <p>Loading...</p>
-            </div>
+            <div class="dialog-about-content" id="switch-case-section"></div>
 
         </article>
     `
@@ -132,7 +129,7 @@ function getEvoChainTemplate(innerHtml) {
 
 function getSingleEvoTemplate(evo, fontColor) {
     return `
-        <section class="evo-stage">
+        <section id="evo-stage" class="evo-stage">
             <img class="evo-img" src="${IMG_URL}${evo.id}.png" alt="${evo.name}">
             <p class="evo-name ${fontColor}">${evo.name.charAt(0).toUpperCase() + evo.name.slice(1)}</p>
         </section>
@@ -146,11 +143,3 @@ function loadingSpinnerTemplate(cssClass) {
     </div>
   `;
 }
-
-
-
-
-
-//About
-// base stats
-// evo chain

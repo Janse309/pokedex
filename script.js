@@ -25,7 +25,7 @@ let baseStats = {};
 // ==========================================
 async function init() {
     await loadPokemon();
-    currentPokemon = allPokemon;
+    // currentPokemon = allPokemon;
 }
 
 async function fetchPokemonList() {
@@ -40,25 +40,30 @@ async function loadPokemonDetails(pokemonDetailUrl) {
 }
 
 async function loadPokemon() {
+    let loadMoreBtn = document.getElementById("load-more-button");
+    if (loadMoreBtn) loadMoreBtn.disabled = true; 
     showFullscreenSpinner();
     try {
         let pkmnListData = await fetchPokemonList();
         for (let i = 0; i < pkmnListData.results.length; i++) {
             allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
         }
+        currentPokemon = allPokemon;
         renderAllPokemon();
-        hideFullscreenSpinner();
         OFFSET += LIMIT;
     } catch (error) {
         console.error("Fehler beim Laden der Pokemon", error);
     }
-    loadmorePkmn();
+    finally{
+        hideFullscreenSpinner();
+        if (loadMoreBtn) loadMoreBtn.disabled = false;
+    }
 }
 
-function loadmorePkmn() {
-    let loadingPokemonButton = document.getElementById('load-more-pokemon');
-    loadingPokemonButton.innerHTML = '<button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>';
-}
+// function loadmorePkmn() {
+//     let loadingPokemonButton = document.getElementById('load-more-pokemon');
+//     loadingPokemonButton.innerHTML = '<button data-id="load-more-button" class="load-more-button" onclick="loadPokemon()">load more</button>';
+// }
 
 async function fetchFlavorText(pokemonId) {
     let response = await fetch(`${SPECIES_URL}${pokemonId}/`);
@@ -128,13 +133,16 @@ function renderTypes(pokemon) {
 // ==========================================
 // 4. DIALOG LOGIK (ÖFFNEN / SCHLIESSEN / NAVI)
 // ==========================================
-function openDialog(id) {
+async function openDialog(id) {
     let dialog = document.getElementById('pokemon-dialog');
-
     currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
     activePokemonInformation = 'main';
-
     let pokemon = currentPokemon[currentPokemonIndex];
+
+    if (!pokemon.flavorText) {
+        pokemon.flavorText = await fetchFlavorText(pokemon.id);
+    }
+
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
 
@@ -173,10 +181,14 @@ function prevPokemon() {
     updateDialog();
 }
 
-function updateDialog() {
+async function updateDialog() {
     let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';
+
+    if (!pokemon.flavorText) {
+        pokemon.flavorText = await fetchFlavorText(pokemon.id);
+    }
 
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
@@ -198,7 +210,6 @@ function changeTab(tabName) {
 }
 
 async function renderDetailInfo() {
-
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
@@ -206,7 +217,7 @@ async function renderDetailInfo() {
 
     switch (activePokemonInformation) {
         case "main":
-            await getMainPokemonInformation(pokemon);
+            getMainPokemonInformation(pokemon);
             break;
         case "base-stats":
             container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
@@ -226,10 +237,10 @@ async function getMainPokemonInformation(pokemon) {
             abilitiesList += ", ";
         }
     }
-
+    
     let weightKg = (pokemon.weight / 10).toFixed(2).replace(".", ",") + "kg";
     let heightM = (pokemon.height * 10).toFixed() + "cm";
-    let flavorText = await fetchFlavorText(pokemon.id);
+    let flavorText = pokemon.flavorText || 'No description available.';
     let aboutContainer = document.getElementById('switch-case-section');
     let mainType = pokemon.types[0].type.name;
     let fontColor = "color-" + mainType;
@@ -270,7 +281,7 @@ function renderEvoParts(evolutions, fontColor) {
     for (let i = 0; i < evolutions.length; i++) {
         parts.push(getSingleEvoTemplate(evolutions[i], fontColor));
         if (i < evolutions.length - 1) {
-            parts.push(`<div class="evo-arrow ${fontColor}">▼</div>`);
+            parts.push(`<div class="evo-arrow ${fontColor}">>>></div>`);
         }
     }
     return parts;
@@ -324,4 +335,9 @@ function hideFullscreenSpinner() {
     if (spinner) {
         spinner.remove(); // Löscht den Vollbild-Spinner wieder komplett
     }
+}
+
+function loadingSpinnerForInformation() {
+    let loadId = document.getElementById('loading-spinner-container');
+    loadId.innerHTML = loadingSpinnerTemplate(containerSpinner);
 }

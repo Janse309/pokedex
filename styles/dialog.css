@@ -61,7 +61,9 @@ dialog::backdrop {
 }
 
 .information-btn-section {
+    display: flex;
     margin-top: 8px;
+    gap: 16px;
 }
 
 .dialog-button {
@@ -126,10 +128,8 @@ table {
 
 .evo-chain-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 200px;
 }
 
 .evo-stage {
@@ -137,11 +137,15 @@ table {
     flex-direction: column;
     align-items: center;
     height: 75px;
-    margin: 6px 0 6px 0;
+    margin-top: 56px;
+}
+
+.evo-arrow{
+    margin-top: 56px;
 }
 
 .evo-img {
-    height: 60px;
+    height: 75px;
 }
 
 @media(max-width: 560px) {
@@ -151,7 +155,7 @@ table {
     }
 
     .pokemon-dialog {
-        width: 300px;
+        /* width: 300px; */
         height: 550px;
     }
 
@@ -179,5 +183,9 @@ table {
 
     .flavour-text-size-mobile {
         font-size: 14px;
+    }
+
+    .evo-chain-container{
+        flex-direction: row;
     }
 }
