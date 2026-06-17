@@ -68,6 +68,10 @@ body:has(dialog[open]) {
     height: 24px;
 }
 
+.no-pokemon-found-text {
+    font-family: 'Poppins', sans-serif;
+}
+
 .pokemon-main-content {
     display: flex;
     flex-wrap: wrap;

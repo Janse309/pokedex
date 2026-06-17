@@ -12,7 +12,7 @@ searchIcon.addEventListener("click", () => {
 function handleSearch() {
     const inputValue = inputElement.value.trim().toLowerCase();
 
-    if (inputValue.length > 0 && inputValue.length < 3) {
+    if (inputValue.length >= 0 && inputValue.length < 3) {
         inputElement.setCustomValidity("Bitte gib mindestens 3 Buchstaben ein.");
         inputElement.focus();
         return inputElement.reportValidity();
@@ -21,7 +21,7 @@ function handleSearch() {
 
     currentPokemon = allPokemon.filter(pokemon =>
         inputValue === "" || pokemon.name.toLowerCase().includes(inputValue)
-    );
+    )
 
     renderFilteredPokemon();
 }
@@ -30,7 +30,7 @@ function renderFilteredPokemon() {
     const pokemonContainer = document.getElementById('pokedex-gallery');
 
     if (currentPokemon.length === 0) {
-        pokemonContainer.innerHTML = '<h2 data-id="not-found" class="no-results">no pokemon found ...</h2>';
+        pokemonContainer.innerHTML = '<h2 class="no-pokemon-found-text" data-id="not-found" class="no-results">no pokemon found ...</h2>';
         return;
     }
 
@@ -42,7 +42,8 @@ function buildPokemonHtmlList(pokemonArray) {
     for (let i = 0; i < pokemonArray.length; i++) {
         let pokemon = pokemonArray[i];
         let mainType = pokemon.types[0].type.name;
-        htmlContent += getPokemonInformationTemplate(pokemon, mainType);
+        let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+        htmlContent += getPokemonInformationTemplate(pokemon, mainType, i, pokemonImg);
     }
     return htmlContent;
 }
