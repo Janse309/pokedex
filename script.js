@@ -8,7 +8,7 @@ spinnerOverlay.id = 'global-spinner';
 
 let allPokemon = [];
 let currentPokemon = [];
-let currentPokemonIndex = 0; 
+let currentPokemonIndex = 0;
 
 let OFFSET = 0;
 const LIMIT = 25;
@@ -65,7 +65,7 @@ async function fetchFlavorText(pokemonId) {
 function findEnglishEntry(entries) {
     for (let i = 0; i < entries.length; i++) {
         if (entries[i].language.name === 'en' && entries[i].version.name === 'ruby') {
-            return entries[i]; 
+            return entries[i];
         }
     }
     for (let i = 0; i < entries.length; i++) {
@@ -75,6 +75,7 @@ function findEnglishEntry(entries) {
     }
     return null;
 }
+
 async function fetchEvolutionChain(pokemonId) {
     let responseSpecies = await fetch(`${SPECIES_URL}${pokemonId}/`);
     let speciesData = await responseSpecies.json();
@@ -91,9 +92,12 @@ function renderAllPokemon() {
     let htmlContent = "";
 
     for (let index = 0; index < allPokemon.length; index++) {
+
         let pokemon = allPokemon[index];
         let mainType = pokemon.types[0].type.name;
-        htmlContent += getPokemonInformationTemplate(pokemon, mainType);
+        let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+
+        htmlContent += getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg);
     }
     pokemonContainer.innerHTML = htmlContent;
 }
@@ -112,11 +116,10 @@ function renderTypes(pokemon) {
     return typeText;
 }
 
-async function openDialog(id) {
+async function openDialog(index) {
     let dialog = document.getElementById('pokemon-dialog');
+    currentPokemonIndex = index;
     let pokemon = currentPokemon[currentPokemonIndex];
-    currentPokemonIndex = currentPokemon.findIndex(pokemon => pokemon.id === id);
-    activePokemonInformation = 'main';
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
@@ -156,7 +159,7 @@ function prevPokemon() {
     updateDialog();
 }
 
-async function updateDialog() { 
+async function updateDialog() {
     let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';

@@ -1,5 +1,4 @@
-function getPokemonInformationTemplate(pokemon, mainType) { // card
-    let pokemonImg = pokemon.sprites.other['official-artwork'].front_default || pokemon.sprites.front_default;
+function getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg) { // card
     return `   
         <section class="pokemon-card">
             <div class="pokemon-card-header">
@@ -7,7 +6,7 @@ function getPokemonInformationTemplate(pokemon, mainType) { // card
                 <p>#${pokemon.id}</p>
             </div>
             <div id="card-image-background" class="pokemon-card-image pokemon-background-color" data-type="${mainType}">
-                <button data-id="card" onclick="openDialog(${pokemon.id})" class="pokemon-img-button"><img data-id="card-image" class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
+                <button data-id="card" onclick="openDialog(${index})" class="pokemon-img-button"><img data-id="card-image" class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
         </section>

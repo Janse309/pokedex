@@ -30,7 +30,7 @@ function renderFilteredPokemon() {
     const pokemonContainer = document.getElementById('pokedex-gallery');
 
     if (currentPokemon.length === 0) {
-        pokemonContainer.innerHTML = '<p data-id="not-found" class="no-results">Kein Pokémon gefunden.</p>';
+        pokemonContainer.innerHTML = '<h2 data-id="not-found" class="no-results">no pokemon found ...</h2>';
         return;
     }
 
