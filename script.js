@@ -297,3 +297,10 @@ function loadingSpinnerForInformation() {
     let loadId = document.getElementById('loading-spinner-container');
     loadId.innerHTML = loadingSpinnerTemplate(containerSpinner);
 }
+
+//Schriftart bei "kein 'Pokemon gefunden ändern"
+// footer mit Logo
+// in der searchbar placeholder = pokemon search oder so
+// wenn ich suche den loadmorebutton verstecken
+//loading spinner transparenter
+// template von logik trennen
