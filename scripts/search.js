@@ -3,6 +3,7 @@ const searchIcon = document.querySelector("#search-icon");
 
 inputElement.addEventListener("keydown", (event) => {
     if (event.key === "Enter") handleSearch();
+    inputElement = "";
 });
 
 searchIcon.addEventListener("click", () => {
@@ -11,6 +12,9 @@ searchIcon.addEventListener("click", () => {
 
 function handleSearch() {
     const inputValue = inputElement.value.trim().toLowerCase();
+    let searchInput = document.getElementById('search-input-field');
+
+    searchInput.value = ""
 
     if (inputValue.length >= 0 && inputValue.length < 3) {
         inputElement.setCustomValidity("Bitte gib mindestens 3 Buchstaben ein.");
