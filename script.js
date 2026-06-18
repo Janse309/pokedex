@@ -118,12 +118,6 @@ function renderTypes(pokemon) {
 
 async function openDialog(index) {
     let dialog = document.getElementById('pokemon-dialog');
-
-    if (!currentPokemon || !currentPokemon[index]) {
-        console.error(`Fehler: Kein Pokémon an Index ${index} im currentPokemon-Array gefunden!`, currentPokemon);
-        return; // Bricht ab, bevor es zum Absturz kommt
-    }
-
     currentPokemonIndex = index;
     let pokemon = currentPokemon[currentPokemonIndex];
     if (!pokemon.flavorText) {
@@ -307,9 +301,7 @@ function loadingSpinnerForInformation() {
     loadId.innerHTML = loadingSpinnerTemplate(containerSpinner);
 }
 
-//Schriftart bei "kein 'Pokemon gefunden ändern"
-// footer mit Logo
-// in der searchbar placeholder = pokemon search oder so
 // wenn ich suche den loadmorebutton verstecken
 //loading spinner transparenter
 // template von logik trennen
+// 

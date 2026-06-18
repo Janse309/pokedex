@@ -145,17 +145,12 @@ main {
     color: white;
     flex-shrink: 0;
     /* Verhindert, dass der Footer zusammengedrückt wird */
+    z-index: 1;
+    position: relative;
 }
 
-.pokedex-footer a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.footer-text {
-    width: 100%;
-    font-family: 'Poppins', sans-serif;
+.footer-img {
+    height: 75px;
 }
 
 @media(max-width: 1440px) {
