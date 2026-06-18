@@ -13,7 +13,7 @@ function getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg) { /
     `
 }
 
-function getPokemonDialogTemplate(pokemon, fontColor) {
+function getPokemonDialogTemplate(pokemon) {
 
     return `
         <article data-id="overlay-pokemon-name" class="dialog-container" onclick="event.stopPropagation()">
@@ -44,13 +44,13 @@ function getPokemonDialogTemplate(pokemon, fontColor) {
 
             <nav class="information-btn-section" aria-label="Pokémon Details Navigation">
                 <button onclick="changeTab('main')" id="about-btn" class="dialog-button">
-                    <h3 class="${fontColor}">about</h3>
+                    <h3 class="pokemon-dialog-information-font-color">about</h3>
                 </button>
                 <button onclick="changeTab('base-stats')" id="base-stats-btn" class="dialog-button">
-                    <h3 class="${fontColor}">base stats</h3>
+                    <h3 class="pokemon-dialog-information-font-color">base stats</h3>
                 </button>
                 <button onclick="changeTab('evo-chain')" id="evo-chain-btn" class="dialog-button">
-                    <h3 class="${fontColor}">evo-chain</h3>
+                    <h3 class="pokemon-dialog-information-font-color">evo-chain</h3>
                 </button>
             </nav>
 
@@ -60,32 +60,32 @@ function getPokemonDialogTemplate(pokemon, fontColor) {
     `
 }
 
-function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor) {
+function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText) {
 
     return `
         <table>
             <tr class="flavour-text-container">
                 <th class="pokemon-description">Description:</th>
-                <td class="${fontColor} flavour-text-size-mobile">${flavorText}</td>
+                <td class="pokemon-dialog-information-font-color flavour-text-size-mobile">${flavorText}</td>
             </tr>
             <tr class="about-table-row">
                 <th>Weight:</th>
-                <td class="${fontColor}">${weightKg}</td>
+                <td class="pokemon-dialog-information-font-color">${weightKg}</td>
             </tr>
             <tr class="about-table-row">
                 <th>Height:</th>
-                <td class="${fontColor}">${heightM}</td>
+                <td class="pokemon-dialog-information-font-color">${heightM}</td>
             </tr>
             <tr class="about-table-row">
                 <th>Abilities:</th>
-                <td class="${fontColor}">${abilitiesList}</td>
+                <td class="pokemon-dialog-information-font-color">${abilitiesList}</td>
             </tr>
 
         </table> 
     `
 }
 
-function getPokemonStatsTemplate(pokemon, fontColor) {
+function getPokemonStatsTemplate(pokemon) {
     // Hilfsvariable, um die Stats leicht herauszusuchen
     let stats = {};
     pokemon.stats.forEach(pokemonStats => {
@@ -96,27 +96,27 @@ function getPokemonStatsTemplate(pokemon, fontColor) {
         <table class="base-stats-table">
             <tr class="base-stats-table-row">
                 <th>HP:</th>
-                <td class="${fontColor}">${stats['hp'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['hp'] || 0}</td>
             </tr>
             <tr class="base-stats-table-row">
                 <th>ATK:</th>
-                <td class="${fontColor}">${stats['attack'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['attack'] || 0}</td>
             </tr>
             <tr class="base-stats-table-row">
                 <th>DEF:</th>
-                <td class="${fontColor}">${stats['defense'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['defense'] || 0}</td>
             </tr>
             <tr class="base-stats-table-row">
                 <th>S-ATK:</th>
-                <td class="${fontColor}">${stats['special-attack'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['special-attack'] || 0}</td>
             </tr>
             <tr class="base-stats-table-row">
                 <th>S-DEF:</th>
-                <td class="${fontColor}">${stats['special-defense'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['special-defense'] || 0}</td>
             </tr>
             <tr class="base-stats-table-row">
                 <th>SPEED:</th>
-                <td class="${fontColor}">${stats['speed'] || 0}</td>
+                <td class="pokemon-dialog-information-font-color">${stats['speed'] || 0}</td>
             </tr>
         </table> 
     `;
@@ -126,11 +126,11 @@ function getEvoChainTemplate(innerHtml) {
     return `<div class="evo-chain-container">${innerHtml}</div>`;
 }
 
-function getSingleEvoTemplate(evo, fontColor) {
+function getSingleEvoTemplate(evo) {
     return `
         <section id="evo-stage" class="evo-stage">
             <img class="evo-img" src="${IMG_URL}${evo.id}.png" alt="${evo.name}">
-            <p class="evo-name ${fontColor}">${evo.name.charAt(0).toUpperCase() + evo.name.slice(1)}</p>
+            <p class="evo-name pokemon-dialog-information-font-color">${evo.name.charAt(0).toUpperCase() + evo.name.slice(1)}</p>
         </section>
     `;
 }

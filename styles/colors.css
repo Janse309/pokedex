@@ -1,75 +1,3 @@
-.color-normal {
-    color: #AAA67F;
-}
-
-.color-fighting {
-    color: #C12239;
-}
-
-.color-flying {
-    color: #A891EC;
-}
-
-.color-poison {
-    color: #c02cb6;
-}
-
-.color-ground {
-    color: #DEC16B;
-}
-
-.color-rock {
-    color: #B69E31;
-}
-
-.color-bug {
-    color: #A7B723;
-}
-
-.color-ghost {
-    color: #70559B;
-}
-
-.color-steel {
-    color: #B7B9D0;
-}
-
-.color-fire {
-    color: #F57D31;
-}
-
-.color-water {
-    color: #6493EB;
-}
-
-.color-grass {
-    color: #74CB48;
-}
-
-.color-electric {
-    color: #F9CF30;
-}
-
-.color-psychic {
-    color: #FB5584;
-}
-
-.color-ice {
-    color: #9AD6DF;
-}
-
-.color-dragon {
-    color: #7037FF;
-}
-
-.color-dark {
-    color: #75574C;
-}
-
-.color-fairy {
-    color: #E69EAC;
-}
-
 .pokemon-card-image[data-type="normal"] { --type-color: #AAA67F; }
 .pokemon-card-image[data-type="fighting"] { --type-color: #C12239; }
 .pokemon-card-image[data-type="flying"] { --type-color: #A891EC; }
@@ -111,6 +39,10 @@
 .pokemon-dialog[data-type="dragon"] { --type-color: #7037FF; }
 .pokemon-dialog[data-type="dark"] { --type-color: #75574C; }
 .pokemon-dialog[data-type="fairy"] { --type-color: #E69EAC; }
+
+.pokemon-dialog-information-font-color{
+    color: var(--type-color) !important;
+}
 
 .pokemon-dialog button {
     border-bottom: 2px solid transparent; /* Unsichtbarer Rand, damit die Buttons nicht springen */

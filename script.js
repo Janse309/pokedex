@@ -2,6 +2,7 @@ const BASE_URL = "https://pokeapi.co/api/v2/";
 const SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 const IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
+let dialog = document.getElementById('pokemon-dialog');
 
 const spinnerOverlay = document.createElement('div');
 spinnerOverlay.id = 'global-spinner';
@@ -117,15 +118,13 @@ function renderTypes(pokemon) {
 }
 
 async function openDialog(index) {
-    let dialog = document.getElementById('pokemon-dialog');
     currentPokemonIndex = index;
     let pokemon = currentPokemon[currentPokemonIndex];
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
     let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon);
     dialog.setAttribute('data-type', mainType);
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
@@ -133,7 +132,6 @@ async function openDialog(index) {
 }
 
 function closeDialog() {
-    let dialog = document.getElementById('pokemon-dialog');
     dialog.close();
 }
 
@@ -160,15 +158,15 @@ function prevPokemon() {
 }
 
 async function updateDialog() {
-    let dialog = document.getElementById('pokemon-dialog');
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';
+
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
+    
     let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-    dialog.innerHTML = getPokemonDialogTemplate(pokemon, fontColor);
+    dialog.innerHTML = getPokemonDialogTemplate(pokemon);
     dialog.setAttribute('data-type', mainType);
 
     getMainPokemonInformation(pokemon);
@@ -185,12 +183,10 @@ async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-
     switch (activePokemonInformation) {
         case "main": getMainPokemonInformation(pokemon);
             break;
-        case "base-stats": container.innerHTML = getPokemonStatsTemplate(pokemon, fontColor);
+        case "base-stats": container.innerHTML = getPokemonStatsTemplate(pokemon);
             break;
         case "evo-chain": await renderEvoChain(pokemon);
             break;
@@ -208,8 +204,7 @@ async function getMainPokemonInformation(pokemon) {
     let heightM = (pokemon.height * 10).toFixed() + "cm";
     let flavorText = pokemon.flavorText || 'No description available.';
     let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-    document.getElementById('switch-case-section').innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText, fontColor);
+    document.getElementById('switch-case-section').innerHTML = getAboutTemplate(weightKg, heightM, abilitiesList, flavorText);
 }
 
 function collectEvolutions(chain, evolutions) {
@@ -232,18 +227,17 @@ async function renderEvoChain(pokemon) {
     collectEvolutions(chain, evolutions);
     hideContainerSpinner(evoId);
     let mainType = pokemon.types[0].type.name;
-    let fontColor = "color-" + mainType;
-    let parts = renderEvoParts(evolutions, fontColor);
+    let parts = renderEvoParts(evolutions);
     let container = document.getElementById(evoId);
     container.innerHTML = getEvoChainTemplate(parts.join(''));
 }
 
-function renderEvoParts(evolutions, fontColor) {
+function renderEvoParts(evolutions) {
     let parts = [];
     for (let i = 0; i < evolutions.length; i++) {
-        parts.push(getSingleEvoTemplate(evolutions[i], fontColor));
+        parts.push(getSingleEvoTemplate(evolutions[i]));
         if (i < evolutions.length - 1) {
-            parts.push(`<div id="evo-arrow" class="evo-arrow ${fontColor}"><p class="arrow">>>></p></div>`);
+            parts.push(`<div id="evo-arrow" class="evo-arrow"><p class="arrow">>>></p></div>`);
         }
     }
     return parts;
@@ -296,12 +290,8 @@ function hideFullscreenSpinner() {
     }
 }
 
-function loadingSpinnerForInformation() {
-    let loadId = document.getElementById('loading-spinner-container');
-    loadId.innerHTML = loadingSpinnerTemplate(containerSpinner);
-}
-
 // wenn ich suche den loadmorebutton verstecken
 //loading spinner transparenter
 // template von logik trennen
-// 
+// neuen loading spinner für evo
+// functionen under 14 lines

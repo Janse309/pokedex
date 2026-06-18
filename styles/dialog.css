@@ -142,6 +142,7 @@ table {
 
 .evo-arrow{
     margin-top: 56px;
+    color: var(--type-color) !important;
     
 }
 
