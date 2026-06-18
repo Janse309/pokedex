@@ -35,25 +35,33 @@ async function loadPokemonDetails(pokemonDetailUrl) {
     return await response.json();
 }
 
-async function loadPokemon() { // 19 Zeilen
-    let loadMoreBtn = document.getElementById("load-more-button");
-    if (loadMoreBtn) loadMoreBtn.disabled = true;
+async function loadPokemon() {
+    toggleLoadButton(true);
     showFullscreenSpinner();
     try {
         let pkmnListData = await fetchPokemonList();
-        for (let i = 0; i < pkmnListData.results.length; i++) {
-            allPokemon.push(await loadPokemonDetails(pkmnListData.results[i].url));
-        }
+        await fetchAndSaveDetails(pkmnListData.results);
         currentPokemon = allPokemon;
         renderAllPokemon();
         OFFSET += LIMIT;
     } catch (error) {
         console.error("Fehler beim Laden der Pokemon", error);
+    } finally {
+        hideFullscreenSpinner(); 
+        toggleLoadButton(false);
     }
-    finally {
-        hideFullscreenSpinner();
-        if (loadMoreBtn) loadMoreBtn.disabled = false;
+}
+
+async function fetchAndSaveDetails(pokemonResults) {
+    for (let i = 0; i < pokemonResults.length; i++) {
+        let details = await loadPokemonDetails(pokemonResults[i].url);
+        allPokemon.push(details);
     }
+}
+
+function toggleLoadButton(disable) {
+    let loadMoreBtn = document.getElementById("load-more-button");
+    if (loadMoreBtn) loadMoreBtn.disabled = disable;
 }
 
 async function fetchFlavorText(pokemonId) {
@@ -304,9 +312,3 @@ function hideLoadMoreBtn() {
     let loadMoreButton = document.getElementById('load-more-button');
     loadMoreButton.classList.add('d-none');
 }
-
-
-
-// template von logik trennen
-// neuen loading spinner für evo
-// functionen under 14 lines

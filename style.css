@@ -82,10 +82,10 @@ body:has(dialog[open]) {
 
 /* loading spinner */
 
-body.loading #load-more-button,
+/* body.loading #load-more-button,
 body.loading footer {
     display: none;
-}
+} */
 
 .loading-spinner-container {
     position: fixed;
@@ -181,5 +181,10 @@ main {
 
     .headline-section {
         margin-bottom: 8px;
+    }
+
+    .loading-spinner {
+        width: 100px;
+
     }
 }
