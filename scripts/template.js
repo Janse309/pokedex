@@ -1,6 +1,6 @@
-function getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg) { // card
+function getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg) {
     return `   
-        <section class="pokemon-card">
+        <article class="pokemon-card">
             <div class="pokemon-card-header">
                 <h2>${pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1)}</h2>
                 <p>#${pokemon.id}</p>
@@ -9,7 +9,7 @@ function getPokemonInformationTemplate(pokemon, mainType, index, pokemonImg) { /
                 <button data-id="card" onclick="openDialog(${index})" class="pokemon-img-button"><img data-id="card-image" class="pkmn-img" src="${pokemonImg}" alt="${pokemon.name}"></button>
             </div>
             <div class="pkmn-card-footer">${renderTypes(pokemon)}</div>
-        </section>
+        </article>
     `
 }
 

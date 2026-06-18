@@ -47,7 +47,7 @@ async function loadPokemon() {
     } catch (error) {
         console.error("Fehler beim Laden der Pokemon", error);
     } finally {
-        hideFullscreenSpinner(); 
+        hideFullscreenSpinner();
         toggleLoadButton(false);
     }
 }
@@ -127,16 +127,24 @@ function renderTypes(pokemon) {
     return typeText;
 }
 
+async function ensureFlavorText(pokemon) {
+    if (pokemon.flavorText) return;
+    try {
+        pokemon.flavorText = await fetchFlavorText(pokemon.id);
+    } catch (error) {
+        console.error("Fehler beim Laden des Flavor Textes", error);
+    }
+}
+
 async function openDialog(index) {
     currentPokemonIndex = index;
     let pokemon = currentPokemon[currentPokemonIndex];
-        activePokemonInformation = 'main';
-    if (!pokemon.flavorText) {
-        pokemon.flavorText = await fetchFlavorText(pokemon.id);
-    }
-    let mainType = pokemon.types[0].type.name;
+    activePokemonInformation = 'main';
+
+    await ensureFlavorText(pokemon);
+
     dialog.innerHTML = getPokemonDialogTemplate(pokemon);
-    dialog.setAttribute('data-type', mainType);
+    dialog.setAttribute('data-type', pokemon.types[0].type.name);
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
     dialog.showModal();
@@ -172,13 +180,10 @@ async function updateDialog() {
     let pokemon = currentPokemon[currentPokemonIndex];
     activePokemonInformation = 'main';
 
-    if (!pokemon.flavorText) {
-        pokemon.flavorText = await fetchFlavorText(pokemon.id);
-    }
+    await ensureFlavorText(pokemon);
 
-    let mainType = pokemon.types[0].type.name;
     dialog.innerHTML = getPokemonDialogTemplate(pokemon);
-    dialog.setAttribute('data-type', mainType);
+    dialog.setAttribute('data-type', pokemon.types[0].type.name);
 
     getMainPokemonInformation(pokemon);
     updateButtonStyles();
@@ -193,16 +198,16 @@ function changeTab(tabName) {
 async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
-    let mainType = pokemon.types[0].type.name;
     let stats = {};
-    pokemon.stats.forEach(pokemonStats => {stats[pokemonStats.stat.name] = pokemonStats.base_stat;});
-    switch (activePokemonInformation) {
-        case "main": getMainPokemonInformation(pokemon);
-            break;
-        case "base-stats": container.innerHTML = getPokemonStatsTemplate(stats);
-            break;
-        case "evo-chain": await renderEvoChain(pokemon);
-            break;
+    pokemon.stats.forEach(pokemonStats => { stats[pokemonStats.stat.name] = pokemonStats.base_stat; });
+    try {
+        switch (activePokemonInformation) {
+            case "main": getMainPokemonInformation(pokemon); break;
+            case "base-stats": container.innerHTML = getPokemonStatsTemplate(stats); break;
+            case "evo-chain": await renderEvoChain(pokemon); break;
+        }
+    } catch (error) {
+        console.error("Fehler beim Tab-Wechsel:", error);
     }
 }
 
@@ -234,15 +239,18 @@ function collectEvolutions(chain, evolutions) {
 async function renderEvoChain(pokemon) {
     const evoId = 'switch-case-section';
     showContainerSpinner(evoId);
-
-    let chain = await fetchEvolutionChain(pokemon.id);
-    let evolutions = [];
-    collectEvolutions(chain, evolutions);
-    hideContainerSpinner(evoId);
-    let mainType = pokemon.types[0].type.name;
-    let parts = renderEvoParts(evolutions);
-    let container = document.getElementById(evoId);
-    container.innerHTML = getEvoChainTemplate(parts.join(''));
+    try {
+        let chain = await fetchEvolutionChain(pokemon.id);
+        let evolutions = [];
+        collectEvolutions(chain, evolutions);
+        let parts = renderEvoParts(evolutions);
+        document.getElementById(evoId).innerHTML = getEvoChainTemplate(parts.join(''));
+    } catch (error) {
+        console.error("Fehler beim Laden der Evolutionskette");
+    }
+    finally {
+        hideContainerSpinner(evoId);
+    }
 }
 
 function renderEvoParts(evolutions) {
