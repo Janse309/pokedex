@@ -92,6 +92,9 @@ async function fetchEvolutionChain(pokemonId) {
     let speciesData = await responseSpecies.json();
 
     let evoChainUrl = speciesData.evolution_chain.url;
+    if (evoChainUrl.startsWith('http://')) {
+        evoChainUrl = evoChainUrl.replace('http://', 'https://');
+    }
     let evoResponse = await fetch(evoChainUrl);
     let evoData = await evoResponse.json();
 
