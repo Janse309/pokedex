@@ -38,12 +38,6 @@ body:has(dialog[open]) {
     color: #F9CF30;
 }
 
-.page-headline-text {
-    font-family: 'pokemonsolid', sans-serif;
-    color: #F9CF30;
-    font-weight: normal;
-}
-
 .search-input {
     height: 32px;
     width: 200px;

@@ -3,7 +3,6 @@ const searchIcon = document.querySelector("#search-icon");
 
 inputElement.addEventListener("keydown", (event) => {
     if (event.key === "Enter") handleSearch();
-    // inputElement = "";
 });
 
 searchIcon.addEventListener("click", () => {
