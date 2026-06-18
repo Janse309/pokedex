@@ -19,7 +19,9 @@ let about = {};
 let baseStats = {};
 
 async function init() {
+    hideLoadMoreBtn();
     await loadPokemon();
+    showLoadMoreBtn();
 }
 
 async function fetchPokemonList() {
@@ -33,7 +35,7 @@ async function loadPokemonDetails(pokemonDetailUrl) {
     return await response.json();
 }
 
-async function loadPokemon() { // 21 Zeilen
+async function loadPokemon() { // 19 Zeilen
     let loadMoreBtn = document.getElementById("load-more-button");
     if (loadMoreBtn) loadMoreBtn.disabled = true;
     showFullscreenSpinner();
@@ -164,7 +166,7 @@ async function updateDialog() {
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
-    
+
     let mainType = pokemon.types[0].type.name;
     dialog.innerHTML = getPokemonDialogTemplate(pokemon);
     dialog.setAttribute('data-type', mainType);
@@ -289,6 +291,18 @@ function hideFullscreenSpinner() {
         spinner.remove();
     }
 }
+
+function showLoadMoreBtn() {
+    let loadMoreButton = document.getElementById('load-more-button');
+    loadMoreButton.classList.remove('d-none');
+}
+
+function hideLoadMoreBtn() {
+    let loadMoreButton = document.getElementById('load-more-button');
+    loadMoreButton.classList.add('d-none');
+}
+
+
 
 // wenn ich suche den loadmorebutton verstecken
 //loading spinner transparenter

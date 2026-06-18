@@ -3,7 +3,7 @@
     justify-content: center;
 }
 
-.load-more-button {
+.load-more-and-reset-btn {
     width: 250px;
     padding: 16px;
     margin-top: 20px;
@@ -17,7 +17,11 @@
     font-weight: bold;
 }
 
-.control-btn{
+.load-more-and-reset-btn:hover {
+    background-color: #eb0a2f;
+}
+
+.control-btn {
     outline: none;
     border: none;
     background: none;
@@ -25,10 +29,10 @@
     margin: 0;
 }
 
-.close-btn{
-    height: 45px; 
+.close-btn {
+    height: 45px;
 }
 
-.close-btn img{
+.close-btn img {
     height: 45px;
 }
