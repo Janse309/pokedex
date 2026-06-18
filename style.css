@@ -101,7 +101,7 @@ body.loading footer {
 }
 
 .loading-spinner {
-    max-width: 150px;
+    width: 150px;
     /* NAME KORRIGIERT auf 'spin' und Zeit auf 1.5s verkürzt für eine flüssige Drehung */
     animation: spin 1.5s linear infinite;
 }
@@ -145,13 +145,12 @@ main {
     color: white;
     flex-shrink: 0;
     /* Verhindert, dass der Footer zusammengedrückt wird */
-    z-index: 1;
-    position: relative;
 }
 
 .footer-img {
     height: 75px;
 }
+
 
 @media(max-width: 1440px) {
     .pokedex-footer {
