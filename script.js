@@ -247,8 +247,6 @@ async function renderEvoChain(pokemon) {
         document.getElementById(evoId).innerHTML = getEvoChainTemplate(parts.join(''));
     } catch (error) {
         console.error("Fehler beim Laden der Evolutionskette");
-    }
-    finally {
         hideContainerSpinner(evoId);
     }
 }
