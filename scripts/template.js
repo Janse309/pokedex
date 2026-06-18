@@ -85,13 +85,7 @@ function getAboutTemplate(weightKg, heightM, abilitiesList, flavorText) {
     `
 }
 
-function getPokemonStatsTemplate(pokemon) {
-    // Hilfsvariable, um die Stats leicht herauszusuchen
-    let stats = {};
-    pokemon.stats.forEach(pokemonStats => {
-        stats[pokemonStats.stat.name] = pokemonStats.base_stat;
-    });
-
+function getPokemonStatsTemplate(stats) {
     return `
         <table class="base-stats-table">
             <tr class="base-stats-table-row">

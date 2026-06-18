@@ -122,6 +122,7 @@ function renderTypes(pokemon) {
 async function openDialog(index) {
     currentPokemonIndex = index;
     let pokemon = currentPokemon[currentPokemonIndex];
+        activePokemonInformation = 'main';
     if (!pokemon.flavorText) {
         pokemon.flavorText = await fetchFlavorText(pokemon.id);
     }
@@ -185,10 +186,12 @@ async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
     let mainType = pokemon.types[0].type.name;
+    let stats = {};
+    pokemon.stats.forEach(pokemonStats => {stats[pokemonStats.stat.name] = pokemonStats.base_stat;});
     switch (activePokemonInformation) {
         case "main": getMainPokemonInformation(pokemon);
             break;
-        case "base-stats": container.innerHTML = getPokemonStatsTemplate(pokemon);
+        case "base-stats": container.innerHTML = getPokemonStatsTemplate(stats);
             break;
         case "evo-chain": await renderEvoChain(pokemon);
             break;
@@ -304,8 +307,6 @@ function hideLoadMoreBtn() {
 
 
 
-// wenn ich suche den loadmorebutton verstecken
-//loading spinner transparenter
 // template von logik trennen
 // neuen loading spinner für evo
 // functionen under 14 lines
