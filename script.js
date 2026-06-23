@@ -198,7 +198,6 @@ function changeTab(tabName) {
     updateButtonStyles();
 }
 
-
 async function renderDetailInfo() {
     let container = document.getElementById('switch-case-section');
     let pokemon = currentPokemon[currentPokemonIndex];
