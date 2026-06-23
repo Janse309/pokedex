@@ -2,11 +2,11 @@ const BASE_URL = "https://pokeapi.co/api/v2/";
 const SPECIES_URL = "https://pokeapi.co/api/v2/pokemon-species/";
 const IMG_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 const ICON_URL = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/types/generation-viii/sword-shield/";
-let dialog = document.getElementById('pokemon-dialog');
-
 const spinnerOverlay = document.createElement('div');
+
 spinnerOverlay.id = 'global-spinner';
 
+let dialog = document.getElementById('pokemon-dialog');
 let allPokemon = [];
 let currentPokemon = [];
 let currentPokemonIndex = 0;
