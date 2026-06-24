@@ -15,8 +15,6 @@ let OFFSET = 0;
 const LIMIT = 25;
 
 let activePokemonInformation = "main";
-let about = {};
-let baseStats = {};
 
 async function init() {
     hideLoadMoreBtn();
